@@ -6,19 +6,21 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 11:06:14 by piaandersin       #+#    #+#              #
-#    Updated: 2020/03/16 11:25:47 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/03/16 13:35:21 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = read_format.c
+SRC = ./src/ft_printf.c
 
-OBJ = $(patsubst %.c, %.o, $(SRC))
+OBJ = $(subst .c,.o,$(subst src/,,$(SRC)))
 
-INCLUDE = includes/ft_printf.h
+INCLUDE = ./includes/ft_printf.h
 
-LIBFT = libft/libft.a
+INCL = -I ./includes -I ./libft/includes
+
+LIBFT = ./libft/libft.a
 
 LIB = ar rc $(NAME) $(OBJ)
 
@@ -26,7 +28,7 @@ all: $(NAME)
 .PHONY: all
 $(NAME):
 	make -C libft/ fclean && make -C libft/
-	gcc -c -Wall -Wextra -Werror $(SRC)
+	gcc -c -Wall -Wextra -Werror $(SRC) $(INCLUDE)
 	$(LIB)
 
 .PHONY: clean
