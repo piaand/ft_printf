@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/17 11:00:13 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/17 15:22:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "../libft/includes/libft.h"
 
 # define SPECIFIERS "diouxXcspf"
+# define FLAGS "#0-+ "
 
 int		ft_printf(const char *format, ...);
 

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/17 13:03:12 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/17 15:20:01 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,26 @@
 char *find_tag(const char *str, size_t j, size_t len_input) {
 	char *format_tag;
 	char *temp;
-	long long index;
+	char *found;
 	unsigned int i;
 	
 	temp = ft_strsub(str, j, len_input);
-	i = 0;
-	index = -1;
-	while (index == -1 && SPECIFIERS[i] != '\0')
+	if (temp[0] == '%')
+		format_tag = ft_strsub(temp, 0, 1);
+	else
 	{
-		index = ft_strchri(temp, SPECIFIERS[i]);
-		i++;
-	}
-	if (index == -1)
-	{
-		if (temp[0] == '%')
-			format_tag = ft_strsub(temp, 0, 1);
-		else
+		i = 0;
+		found = NULL;
+		while (!found && temp[i] != '%' && temp[i] != '\0')
+			found = ft_strchr(SPECIFIERS, temp[i++]);
+		if (!found)
+		{
 			ft_putendl("Error: unvalid specifier.");
 			exit(1);
+		}
+		else
+			format_tag = ft_strsub(temp, 0, i);
 	}
-	else
-		format_tag = ft_strsub(temp, 0, (index + 1));
 	ft_strdel(&temp);
 	return (format_tag);
 }
@@ -45,9 +44,13 @@ int read_format(const char *input, size_t i, size_t len_input) {
 	char *format_tag;
 
 	format_tag = find_tag(input, i, len_input);
-	ft_putstr(format_tag);
-	// assign the structs
-	i = ft_strlen(format_tag) + i;
+	if (format_tag[0] == '%')
+		ft_putchar('%');
+	else 
+	{
+		// assign the structs.
+	}
+	i += ft_strlen(format_tag);
 	return (i);
 }
 
