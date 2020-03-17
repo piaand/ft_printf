@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strchri.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/17 11:00:13 by piaandersin      ###   ########.fr       */
+/*   Created: 2020/03/17 11:57:42 by piaandersin       #+#    #+#             */
+/*   Updated: 2020/03/17 12:06:54 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "includes/libft.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdarg.h>
-# include "../libft/includes/libft.h"
+/* 
+** Returns the index value of a first occurrance of character c
+** if the c is not in the string s, returns -1
+*/ 
 
-# define SPECIFIERS "diouxXcspf"
+long long	ft_strchri(const char *s, int c)
+{
+	long long i;
 
-int		ft_printf(const char *format, ...);
-
-# endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+			return (i);
+		else
+			i++;
+	}
+	if (s[i] == c)
+		return (i);
+	else
+		return (-1);
+}

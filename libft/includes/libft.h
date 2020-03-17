@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pandersi <pandersi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:11:54 by pandersi          #+#    #+#             */
-/*   Updated: 2019/10/30 16:02:28 by pandersi         ###   ########.fr       */
+/*   Updated: 2020/03/17 12:07:27 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 char				*ft_strchr(const char *s, int c);
+long long			ft_strchri(const char *s, int c);
 char				*ft_strcat(char *restrict s1, const char *restrict s2);
 size_t				ft_strlcat(char *restrict dst, const char *restrict src,
 					size_t dstsize);
