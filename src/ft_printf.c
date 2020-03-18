@@ -6,20 +6,30 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/17 16:29:52 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/18 12:13:30 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char *find_tag(const char *str, size_t j, size_t len_input)
+void	ft_error(char *message)
+{
+	ft_putstr("Error: ");
+	ft_putendl(message);
+	exit(1);
+}
+
+char *find_tag(const char **str)
 {
 	char *format_tag;
 	char *temp;
 	char *found;
 	unsigned int i;
 	
-	temp = ft_strsub(str, j, len_input);
+	format_tag = NULL;
+	if (!(temp = ft_strnew(ft_strlen(*str))))
+		ft_error("memory allocation for string failed.");
+	temp = ft_strcpy(temp, *str);
 	if (temp[0] == '%')
 		format_tag = ft_strsub(temp, 0, 1);
 	else
@@ -29,10 +39,7 @@ char *find_tag(const char *str, size_t j, size_t len_input)
 		while (!found && temp[i] != '%' && temp[i] != '\0')
 			found = ft_strchr(SPECIFIERS, temp[i++]);
 		if (!found)
-		{
-			ft_putendl("Error: unvalid specifier.");
-			exit(1);
-		}
+			ft_error("unvalid specifier.");
 		else
 			format_tag = ft_strsub(temp, 0, i);
 	}
@@ -40,91 +47,72 @@ char *find_tag(const char *str, size_t j, size_t len_input)
 	return (format_tag);
 }
 
-void assign_struct(char tag)
+int	print_form_var_list(char *format_tag)
 {
-	int i;
-	int flag_done;
-	char *found;
+	/*t_tag *new;
+	int len;
 
-	found = NULL;
-	flag_done = 0;
-	i = 0;
-	while (flag_done == 0 && tag[i] != '\0')
-	{
-		found = ft_strchr(FLAGS, tag[i]);
-		if (found)
-		{
-			insert_flag(tag[i]);
-			i++;
-		}
-		else
-			flag_done = 1;
-	}
-	while (is_digit(tag[i]) && tag[i] != '\0')
-	{
-		i++;
-		//do atoi to get the number, what about 0 in the beginning?
-	}
-	if (tag[i] == '.')
-	{
-		i++;
-		while (is_digit(tag[i]) && tag[i] != '\0')
-		{
-			//do atoi for precision, if no digits then precision 0
-		}
-	}
-	if (tag[i] == 'h' || tag[i] == 'l' || tag[i] == 'L')
-	{
-		// do length modifiers
-	}
-	found = ft_strchr(SPECIFIERS, tag[i]);
-	if (!found)
-	{
-		ft_putendl("Error: unvalid format tag.")
-		exit(1);
-	}
-	else
-		insert_specifier(tag[i]);
+	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))));
+		ft_error("memory allocation for tag failed.");
+	assign_tag_info(&new, instructions);
+	// apply switch table to do printing
+	// return the amount of printed characters */
+	ft_putendl("Print tag");
+	ft_putendl(format_tag);
+	return (1);
 }
 
-int read_format(const char *input, size_t i, size_t len_input)
+/*
+** Returns the amount of printed argument characters
+*/
+
+int	print_argument(const char **input)
 {
 	char *format_tag;
+	int len_var;
+	size_t i;
 
-	format_tag = find_tag(input, i, len_input);
+	format_tag = find_tag(input);
+	i = 0;
+	while (i < ft_strlen(format_tag))
+	{
+		(*input)++;
+		i++;
+	}
 	if (format_tag[0] == '%')
+	{
 		ft_putchar('%');
-	else 
-		assign_struct(format_tag);
-	i += ft_strlen(format_tag);
-	return (i);
+		len_var = 1;
+	}
+	else
+		 len_var = print_form_var_list(format_tag);
+	return (len_var);
 }
 
+/*
+** Returns the amount of printed characters
+*/
 
 int ft_printf(const char *format, ...)
 {
-	size_t i;
-	size_t j;
-	size_t len_output;
-	size_t len_input;
+	size_t len;
+	size_t len_var;
 
-	len_input = ft_strlen(format);
-	len_output = len_input;
-	j = 0;
-	i = 0;
-	while (format[i] != '\0') {
-		while (format[i] != '%' && format[i] != '\0')
+	len = 0;
+	len_var = 0;
+	while (*format != '\0') {
+		while (*format != '%' && *format != '\0')
 		{
-			ft_putchar(format[i]);
-			i++;
+			ft_putchar(*format);
+			len++;
+			format++;
 		}
-		if (format[i] != '\0')
+		if (*format != '\0')
 		{
-			j = i++;
-			i = read_format(format, i, len_input);
-			len_output -= (i-j);
-			i++;
+			format++;
+			len_var = print_argument(&format);
+			len += len_var;
 		}
 	}
-	return (len_output);
+	return (len);
 }
