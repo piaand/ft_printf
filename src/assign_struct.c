@@ -6,59 +6,208 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/18 11:01:45 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/18 15:32:17 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/ft_printf.h"
+
 /*
-void insert_flag(char flag) {
-	// insert all flgs to struct
+** space ignored when plus, 0 ignored when minus
+*/
+
+void	check_flag_override(t_tag **new)
+{
+	if (new->space == 1 && new->plus == 1)
+		new->space == 0;
+	if (new->zero == 1 && new->minus == 1)
+		new->zero == 0;
 }
 
-void	assign_struct(char *tag)
+char	*init_newstring(size_t len, char c)
 {
-	int i;
-	int flag_done;
-	char *found;
+	char *str;
 
-	found = NULL;
-	flag_done = 0;
-	i = 0;
-	while (flag_done == 0 && tag[i] != '\0')
-	{
-		found = ft_strchr(FLAGS, tag[i]);
-		if (found)
+	if (!(str = ft_strnew(len)))
+		ft_error("memory allocation for string failed.");
+	(void*)str;
+	ft_memset(str, c, len);
+	(char*)str;
+	return (str)
+}
+
+void	init_tag(t_tag **new)
+{
+	char *status;
+	char *len;
+
+	status = init_newstring(4, '0');
+	new->has_value = status;
+	ft_strdel(&status);
+	len = init_newstring(2, '0');
+	new->length = len;
+	ft_strdel(&len);
+	new->hash = 0;
+	new->space = 0;
+	new->zero = 0;
+	new->dash = 0;
+	new->plus = 0;
+	new->width = 0;
+	new->precision = 0;
+}
+
+/*
+void insert_length(t_tag **new, char **str)
+{
+	i++;
+		while (is_digit(tag[i]) && tag[i] != '\0')
 		{
-			insert_flag(tag[i]);
-			i++;
+			//do atoi for precision, if no digits then precision 0
 		}
-		else
-			flag_done = 1;
-	}
+}
+
+void insert_precision(t_tag **new, char **str)
+{
+	i++;
+		while (is_digit(tag[i]) && tag[i] != '\0')
+		{
+			//do atoi for precision, if no digits then precision 0
+		}
+}
+*/
+
+void	insert_width(t_tag **new, char **str) 
+{
 	while (is_digit(tag[i]) && tag[i] != '\0')
 	{
 		i++;
 		//do atoi to get the number, what about 0 in the beginning?
 	}
-	if (tag[i] == '.')
+}
+
+void	insert_flags(t_tag **new, char **str)
+{
+	int flag_done;
+	char *found;
+
+	flag_done = 0;
+	while (flag_done == 0 && *str != '\0')
 	{
-		i++;
-		while (is_digit(tag[i]) && tag[i] != '\0')
+		found = ft_strchr(FLAGS, *str);
+		if (found)
 		{
-			//do atoi for precision, if no digits then precision 0
+			new->FLAG_ON = '1';
+			if (*found == '#')
+				new->hash = 1;
+			else if (*found == ' ')
+				new->space = 1;
+			else if (*found == '-')
+				new->dash = 1;
+			else if (*found == '+')
+				new->plus = 1;
+			else if (*found == '0')
+				new->zero = 1;
+			else
+				ft_error("met unknown flag.")
+			(*str)++;
+		}
+		else
+			flag_done = 1;
+	}
+	found = NULL;
+}
+
+void	assign_tag_info(t_tag **new, char *instructions);
+{
+	int i;
+	char *found;
+
+	found = NULL;
+	i = 0;
+	init_tag(new);
+	insert_flags(new, &instructions); //does not take into account if several same flags are give "-00+-
+	check_flag_override(new);
+	/*insert_width(new, &instructions);
+	if (*instructions == '.')
+		insert_precision(new, &instructions);
+	if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
+		insert_length(new, &instructions);*/
+	found = ft_strchr(SPECIFIERS, *instructions);
+	if (!found)
+		ft_error("unvalid format tag.");
+	else
+		new->specifier = *found;
+}
+
+/* ADD HERE UNIT TESTS FOR STRUCT */
+
+
+void	print_flags(t_tag *t)
+{
+	ft_putendl("Found following flags");
+	ft_putbr(t->hash);
+	ft_putstr('\n');
+	ft_putnbr(t->zero);
+	ft_putstr('\n');
+	ft_putnbr(t->dash);
+	ft_putstr('\n');
+	ft_putnbr(t->plus);
+	ft_putstr('\n');
+	ft_putnbr(t->space);
+	ft_putstr('\n');
+	ft_putendl("Done printing flags");
+}
+
+int	main(int argc, **argv)
+{
+	t_tag *new;
+	int i;
+	char tag = "-s";
+
+	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))));
+		ft_error("memory allocation for tag failed.");
+	if (argc == 2)
+	{
+		assign_tag_info(&new, tag);
+		ft_putendl("Printing info on struct that was given format tag:");
+		ft_putendl(tag);
+		ft_putendl("Struct values");
+		ft_putstr("specifier: ")
+		ft_putendl(new->specifier);
+		ft_putstr("tag values: ");
+		ft_putendl(new->has_value);
+		i = 0;
+		while (new->has_value[i] != '\0')
+		{
+			if (new->has_value[i] == '1')
+			{
+				if (i == 0)
+					print_flags(new);
+				/*else if (i == 1)
+				{
+					ft_putendl("Print width:")
+					ft_putnbr(new->width)
+					ft_putendl(" ")
+				}
+				else if (i == 2)
+				{
+					ft_putendl("Print precision:")
+					ft_putnbr(new->precision)
+					ft_putendl(" ")
+				}
+				else if (i == 3)
+				{
+					ft_putendl("Print length:")
+					ft_putstr(new->length)
+					ft_putendl(" ")
+				}
+				*/else
+					ft_putendl("this should not happen, there is only 4 chars")
+			}
+			i++;
 		}
 	}
-	if (tag[i] == 'h' || tag[i] == 'l' || tag[i] == 'L')
-	{
-		// do length modifiers
-	}
-	found = ft_strchr(SPECIFIERS, tag[i]);
-	if (!found)
-	{
-		ft_putendl("Error: unvalid format tag.")
-		exit(1);
-	}
 	else
-		insert_specifier(tag[i]);
-}*/
+		ft_putendl("give only one argument");
+	return(0);
+}

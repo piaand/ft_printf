@@ -4,4 +4,5 @@
 testmains/
 out
 a.out
+*.a
 
