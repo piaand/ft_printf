@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/18 13:41:58 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/18 15:41:06 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ int	print_form_var_list(char *format_tag)
 	t_tag *new;
 	int len;
 
-	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))));
+	len = 0;
+	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");
 	assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
 	// apply switch table to do printing
 	// return the amount of printed characters
-	return (1);
+	return (len);
 }
 
 /*

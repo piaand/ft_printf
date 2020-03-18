@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/18 15:32:17 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/18 16:11:27 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 ** space ignored when plus, 0 ignored when minus
 */
 
-void	check_flag_override(t_tag **new)
+/*void	check_flag_override(t_tag **new)
 {
-	if (new->space == 1 && new->plus == 1)
+	if (*(new->space) == 1 && *(new->plus) == 1)
 		new->space == 0;
 	if (new->zero == 1 && new->minus == 1)
 		new->zero == 0;
@@ -33,7 +33,7 @@ char	*init_newstring(size_t len, char c)
 	(void*)str;
 	ft_memset(str, c, len);
 	(char*)str;
-	return (str)
+	return (str);
 }
 
 void	init_tag(t_tag **new)
@@ -54,7 +54,7 @@ void	init_tag(t_tag **new)
 	new->plus = 0;
 	new->width = 0;
 	new->precision = 0;
-}
+}*/
 
 /*
 void insert_length(t_tag **new, char **str)
@@ -74,7 +74,7 @@ void insert_precision(t_tag **new, char **str)
 			//do atoi for precision, if no digits then precision 0
 		}
 }
-*/
+
 
 void	insert_width(t_tag **new, char **str) 
 {
@@ -83,7 +83,7 @@ void	insert_width(t_tag **new, char **str)
 		i++;
 		//do atoi to get the number, what about 0 in the beginning?
 	}
-}
+}*/
 
 void	insert_flags(t_tag **new, char **str)
 {
@@ -117,7 +117,7 @@ void	insert_flags(t_tag **new, char **str)
 	found = NULL;
 }
 
-void	assign_tag_info(t_tag **new, char *instructions);
+void	assign_tag_info(t_tag **new, char *instructions)
 {
 	int i;
 	char *found;
@@ -145,35 +145,36 @@ void	assign_tag_info(t_tag **new, char *instructions);
 void	print_flags(t_tag *t)
 {
 	ft_putendl("Found following flags");
-	ft_putbr(t->hash);
-	ft_putstr('\n');
+	ft_putnbr(t->hash);
+	ft_putchar('\n');
 	ft_putnbr(t->zero);
-	ft_putstr('\n');
+	ft_putchar('\n');
 	ft_putnbr(t->dash);
-	ft_putstr('\n');
+	ft_putchar('\n');
 	ft_putnbr(t->plus);
-	ft_putstr('\n');
+	ft_putchar('\n');
 	ft_putnbr(t->space);
-	ft_putstr('\n');
+	ft_putchar('\n');
 	ft_putendl("Done printing flags");
 }
 
-int	main(int argc, **argv)
+int	main(int argc, char **argv)
 {
 	t_tag *new;
 	int i;
-	char tag = "-s";
+	char tag[] = "-s";
 
-	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))));
+	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");
 	if (argc == 2)
 	{
+		void(argv);
 		assign_tag_info(&new, tag);
 		ft_putendl("Printing info on struct that was given format tag:");
 		ft_putendl(tag);
 		ft_putendl("Struct values");
-		ft_putstr("specifier: ")
-		ft_putendl(new->specifier);
+		ft_putstr("specifier: ");
+		ft_putendl(&(new->specifier));
 		ft_putstr("tag values: ");
 		ft_putendl(new->has_value);
 		i = 0;
@@ -202,7 +203,7 @@ int	main(int argc, **argv)
 					ft_putendl(" ")
 				}
 				*/else
-					ft_putendl("this should not happen, there is only 4 chars")
+					ft_putendl("this should not happen, there is only 4 chars");
 			}
 			i++;
 		}
