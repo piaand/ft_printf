@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/18 15:49:06 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 08:34:25 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 # define SPECIFIERS "diouxXcspf"
 # define FLAGS "#0-+ "
-# define FLAG_ON has_value[0]
-# define WIDTH_ON has_value[1]
-# define PRECISION_ON has_value[2]
-# define LENGTH_ON has_value[3]
+# define FLAG_ON 0
+# define WIDTH_ON 1
+# define PRECISION_ON 2
+# define LENGTH_ON 3
 
 
 typedef struct			s_tag
