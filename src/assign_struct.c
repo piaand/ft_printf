@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 13:29:45 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 13:32:18 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ void	assign_tag_info(t_tag **new, char *instructions)
 
 /* ADD HERE UNIT TESTS FOR STRUCT */
 
-
+/*
 void	print_flags(t_tag **new)
 {
 	t_tag *t;
@@ -277,3 +277,4 @@ int	main(int argc, char **argv)
 		ft_putendl("give only one argument");
 	return(0);
 }
+*/

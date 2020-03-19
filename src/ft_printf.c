@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 10:52:03 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 15:39:38 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char *find_tag(const char **str)
 	return (format_tag);
 }
 
-int	print_form_var_list(char *format_tag)
+int	print_from_var_list(char *format_tag, va_list args)
 {
 	t_tag *new;
 	int len;
@@ -58,8 +58,9 @@ int	print_form_var_list(char *format_tag)
 		ft_error("memory allocation for tag failed.");
 	assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
-	// before starting to print, check do all tag arguments go with the specifier
-	// apply switch table to do printing
+	//crosscheck_format(&new); //check do all tag arguments go with the specifier
+	len =  print_next_var(&new, args);
+	// destroy the new t_tag and release the memory
 	// return the amount of printed characters
 	return (len);
 }
@@ -68,7 +69,7 @@ int	print_form_var_list(char *format_tag)
 ** Returns the amount of printed argument characters
 */
 
-int	print_argument(const char **input)
+int	print_argument(const char **input, va_list args)
 {
 	char *format_tag;
 	int len_var;
@@ -87,7 +88,7 @@ int	print_argument(const char **input)
 		len_var = 1;
 	}
 	else
-		 len_var = print_form_var_list(format_tag);
+		 len_var = print_from_var_list(format_tag, args);
 	return (len_var);
 }
 
@@ -99,10 +100,13 @@ int ft_printf(const char *format, ...)
 {
 	size_t len;
 	size_t len_var;
+	va_list	args;
 
 	len = 0;
 	len_var = 0;
-	while (*format != '\0') {
+	va_start(args, format);
+	while (*format != '\0')
+	{
 		while (*format != '%' && *format != '\0')
 		{
 			ft_putchar(*format);
@@ -112,12 +116,13 @@ int ft_printf(const char *format, ...)
 		if (*format != '\0')
 		{
 			format++;
-			len_var = print_argument(&format);
+			len_var = print_argument(&format, args);
 			len += len_var;
 		}
 	}
+	va_end(args);
 	return (len);
 }
 
 
-/* TEST MAIN FOR READING FORMAT ATG INPUT */
+/* TEST MAIN FOR READING FORMAT AT INPUT */

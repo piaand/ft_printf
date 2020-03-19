@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 09:34:44 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 15:05:28 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct			s_tag
 	int					zero;
 	int					dash;
 	int					plus;
-	int					width;
+	unsigned int		width;
 	unsigned int		precision;
 	char				*length;
 }						t_tag;
@@ -43,5 +43,6 @@ typedef struct			s_tag
 int		ft_printf(const char *format, ...);
 void	ft_error(char *message);
 void	assign_tag_info(t_tag **new, char *instructions);
+int		print_next_var(t_tag **format, va_list args);
 
 # endif
