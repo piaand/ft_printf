@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 08:34:25 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 09:34:44 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct			s_tag
 	int					zero;
 	int					dash;
 	int					plus;
-	unsigned int		width;
+	int					width;
 	unsigned int		precision;
 	char				*length;
 }						t_tag;

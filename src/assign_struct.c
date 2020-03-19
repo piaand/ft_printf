@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 08:56:04 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 09:47:48 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,40 @@ void insert_precision(t_tag **new, char **str)
 		}
 }
 
-
+*/
 void	insert_width(t_tag **new, char **str) 
 {
-	while (is_digit(tag[i]) && tag[i] != '\0')
+	char *nb;
+	size_t len;
+	int res;
+
+	len = 0;
+	res = 0;
+	if (ft_isdigit(*(*str)) && *str != '\0')
 	{
-		i++;
-		//do atoi to get the number, what about 0 in the beginning?
+		(*new)->has_value[WIDTH_ON] = '1';
+		while (ft_isdigit(*(*str)) && *str != '\0')
+		{
+			len++;
+			(*str)++;
+		}
+		if (!(nb = ft_strnew(len)))
+			ft_error("memory allocation for string failed.");
+		while (len > 0)
+		{
+			(*str)--;
+			len--;
+		}
+		while (ft_isdigit(*(*str)) && *str != '\0')
+		{
+			nb[len] = *(*str);
+			(*str)++;
+			len++;
+		}
+		res = ft_atoi(nb);
+		(*new)->width = res;
 	}
-}*/
+}
 
 void	insert_flags(t_tag **t, char **str)
 {
@@ -128,9 +153,9 @@ void	assign_tag_info(t_tag **new, char *instructions)
 	found = NULL;
 	i = 0;
 	init_tag(new);
-	insert_flags(new, &instructions); //does not take into account if several same flags are give "-00+-
+	insert_flags(new, &instructions);
 	check_flag_override(new);
-	/*insert_width(new, &instructions);
+	insert_width(new, &instructions);/*
 	if (*instructions == '.')
 		insert_precision(new, &instructions);
 	if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
@@ -168,7 +193,7 @@ int	main(int argc, char **argv)
 {
 	t_tag *new;
 	int i;
-	char tag[] = "-#s";
+	char tag[] = "-20s";
 
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");
@@ -213,6 +238,7 @@ int	main(int argc, char **argv)
 			}
 			i++;
 		}
+		ft_putendl("Done with printing");
 	}
 	else
 		ft_putendl("give only one argument");

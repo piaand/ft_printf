@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/18 15:41:06 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 09:05:39 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	print_form_var_list(char *format_tag)
 		ft_error("memory allocation for tag failed.");
 	assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
+	// before starting to print, check do all tag arguments go with the specifier
 	// apply switch table to do printing
 	// return the amount of printed characters
 	return (len);
