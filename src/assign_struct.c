@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 10:39:54 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 11:44:46 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,6 @@ void	init_tag(t_tag **t)
 	new->precision = 0;
 }
 
-/*
-void insert_length(t_tag **new, char **str)
-{
-	i++;
-		while (is_digit(tag[i]) && tag[i] != '\0')
-		{
-			//do atoi for precision, if no digits then precision 0
-		}
-}
-*/
-
-
 int subtract_number(char **str)
 {
 	size_t len;
@@ -76,7 +64,7 @@ int subtract_number(char **str)
 	char *nb;
 
 	len = 0;
-	while (ft_isdigit(*(*str)) && *str != '\0')
+	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 	{
 		len++;
 		(*str)++;
@@ -88,7 +76,7 @@ int subtract_number(char **str)
 		(*str)--;
 		len--;
 	}
-	while (ft_isdigit(*(*str)) && *str != '\0')
+	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 	{
 		nb[len] = *(*str);
 		(*str)++;
@@ -99,6 +87,45 @@ int subtract_number(char **str)
 	return(res);
 }
 
+char *create_length(char first, char second)
+{
+	char *str;
+
+	if (!(str = ft_strnew(2)))
+		ft_error("memory allocation for string failed.");
+	str[0] = first;
+	str[1] = second;
+	return(str);
+}
+
+void insert_length(t_tag **new, char **str)
+{
+	(*new)->has_value[LENGTH_ON] = '1';
+	if ((*(*str)) == 'h')
+	{
+		if ((*(*str + 1)) == 'h')
+		{
+			(*new)->length = create_length('h', 'h');
+			(*str)++;
+		}
+		else
+			(*new)->length = create_length('0', 'h');
+	}
+	else if ((*(*str)) == 'l')
+	{
+		if ((*(*str + 1)) == 'l')
+		{
+			(*new)->length = create_length('l', 'l');
+			(*str)++;
+		}
+		else
+			(*new)->length = create_length('0', 'l');
+	}
+	else if ((*(*str)) == 'L')
+		(*new)->length = create_length('0', 'L');
+	(*str)++;
+}
+
 void insert_precision(t_tag **new, char **str)
 {
 	int precision;
@@ -106,16 +133,16 @@ void insert_precision(t_tag **new, char **str)
 	(*str)++;
 	precision = 0;
 	(*new)->has_value[PRECISION_ON] = '1';
-	if (ft_isdigit(*(*str)) && *str != '\0')
+	if (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 		precision = subtract_number(str);
-	(*new)->width = precision;
+	(*new)->precision = precision;
 }
 
 void	insert_width(t_tag **new, char **str) 
 {
 	int res;
 
-	if (ft_isdigit(*(*str)) && *str != '\0')
+	if (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 	{
 		(*new)->has_value[WIDTH_ON] = '1';
 		res = subtract_number(str);
@@ -169,9 +196,9 @@ void	assign_tag_info(t_tag **new, char *instructions)
 	check_flag_override(new);
 	insert_width(new, &instructions);
 	if (*instructions == '.')
-		insert_precision(new, &instructions);/*
+		insert_precision(new, &instructions);
 	if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
-		insert_length(new, &instructions);*/
+		insert_length(new, &instructions);
 	found = ft_strchr(SPECIFIERS, *instructions);
 	if (!found)
 		ft_error("unvalid format tag.");
@@ -205,7 +232,7 @@ int	main(int argc, char **argv)
 {
 	t_tag *new;
 	int i;
-	char tag[] = "-20.0s";
+	char tag[] = "##3##3798.lX";
 
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");

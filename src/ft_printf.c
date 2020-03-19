@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 09:05:39 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 10:52:03 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_error(char *message)
 {
 	ft_putstr("Error: ");
 	ft_putendl(message);
+	ft_putendl("\n\nSystem exits.");
 	exit(1);
 }
 
