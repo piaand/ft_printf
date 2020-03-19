@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 09:47:48 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 10:39:54 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,47 +66,59 @@ void insert_length(t_tag **new, char **str)
 			//do atoi for precision, if no digits then precision 0
 		}
 }
+*/
+
+
+int subtract_number(char **str)
+{
+	size_t len;
+	int res;
+	char *nb;
+
+	len = 0;
+	while (ft_isdigit(*(*str)) && *str != '\0')
+	{
+		len++;
+		(*str)++;
+	}
+	if (!(nb = ft_strnew(len)))
+		ft_error("memory allocation for string failed.");
+	while (len > 0)
+	{
+		(*str)--;
+		len--;
+	}
+	while (ft_isdigit(*(*str)) && *str != '\0')
+	{
+		nb[len] = *(*str);
+		(*str)++;
+		len++;
+	}
+	res = ft_atoi(nb);
+	ft_strdel(&nb);
+	return(res);
+}
 
 void insert_precision(t_tag **new, char **str)
 {
-	i++;
-		while (is_digit(tag[i]) && tag[i] != '\0')
-		{
-			//do atoi for precision, if no digits then precision 0
-		}
+	int precision;
+
+	(*str)++;
+	precision = 0;
+	(*new)->has_value[PRECISION_ON] = '1';
+	if (ft_isdigit(*(*str)) && *str != '\0')
+		precision = subtract_number(str);
+	(*new)->width = precision;
 }
 
-*/
 void	insert_width(t_tag **new, char **str) 
 {
-	char *nb;
-	size_t len;
 	int res;
 
-	len = 0;
-	res = 0;
 	if (ft_isdigit(*(*str)) && *str != '\0')
 	{
 		(*new)->has_value[WIDTH_ON] = '1';
-		while (ft_isdigit(*(*str)) && *str != '\0')
-		{
-			len++;
-			(*str)++;
-		}
-		if (!(nb = ft_strnew(len)))
-			ft_error("memory allocation for string failed.");
-		while (len > 0)
-		{
-			(*str)--;
-			len--;
-		}
-		while (ft_isdigit(*(*str)) && *str != '\0')
-		{
-			nb[len] = *(*str);
-			(*str)++;
-			len++;
-		}
-		res = ft_atoi(nb);
+		res = subtract_number(str);
 		(*new)->width = res;
 	}
 }
@@ -155,9 +167,9 @@ void	assign_tag_info(t_tag **new, char *instructions)
 	init_tag(new);
 	insert_flags(new, &instructions);
 	check_flag_override(new);
-	insert_width(new, &instructions);/*
+	insert_width(new, &instructions);
 	if (*instructions == '.')
-		insert_precision(new, &instructions);
+		insert_precision(new, &instructions);/*
 	if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
 		insert_length(new, &instructions);*/
 	found = ft_strchr(SPECIFIERS, *instructions);
@@ -193,7 +205,7 @@ int	main(int argc, char **argv)
 {
 	t_tag *new;
 	int i;
-	char tag[] = "-20s";
+	char tag[] = "-20.0s";
 
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");
