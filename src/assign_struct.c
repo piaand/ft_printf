@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 11:44:46 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/19 13:29:45 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,46 +142,38 @@ void	insert_width(t_tag **new, char **str)
 {
 	int res;
 
-	if (ft_isdigit(*(*str)) && (*(*str)) != '\0')
-	{
-		(*new)->has_value[WIDTH_ON] = '1';
-		res = subtract_number(str);
-		(*new)->width = res;
-	}
+	(*new)->has_value[WIDTH_ON] = '1';
+	res = subtract_number(str);
+	(*new)->width = res;
 }
 
-void	insert_flags(t_tag **t, char **str)
+void	insert_flags(t_tag **new, char **str)
 {
-	t_tag *new;
 	int flag_done;
 	char *found;
 
-	new = *t;
+	(*new)->has_value[FLAG_ON] = '1';
 	flag_done = 0;
 	while (flag_done == 0 && *str != '\0')
 	{
-		found = ft_strchr(FLAGS, *(*str));
-		if (found)
+		if ((found = ft_strchr(FLAGS, *(*str))))
 		{
-			new->has_value[FLAG_ON] = '1';
 			if (*found == '#')
-				new->hash = 1;
+				(*new)->hash = 1;
 			else if (*found == ' ')
-				new->space = 1;
+				(*new)->space = 1;
 			else if (*found == '-')
-				new->dash = 1;
+				(*new)->dash = 1;
 			else if (*found == '+')
-				new->plus = 1;
+				(*new)->plus = 1;
 			else if (*found == '0')
-				new->zero = 1;
-			else
-				ft_error("met unknown flag.");
+				(*new)->zero = 1;
 			(*str)++;
 		}
 		else
 			flag_done = 1;
 	}
-	found = NULL;
+	check_flag_override(new);
 }
 
 void	assign_tag_info(t_tag **new, char *instructions)
@@ -192,9 +184,11 @@ void	assign_tag_info(t_tag **new, char *instructions)
 	found = NULL;
 	i = 0;
 	init_tag(new);
-	insert_flags(new, &instructions);
-	check_flag_override(new);
-	insert_width(new, &instructions);
+	found = ft_strchr(FLAGS, *instructions);
+	if (found)
+		insert_flags(new, &instructions);
+	if (ft_isdigit(*instructions) && *instructions != '\0')
+		insert_width(new, &instructions);
 	if (*instructions == '.')
 		insert_precision(new, &instructions);
 	if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
@@ -232,7 +226,7 @@ int	main(int argc, char **argv)
 {
 	t_tag *new;
 	int i;
-	char tag[] = "##3##3798.lX";
+	char tag[] = "-.Lu";
 
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
 		ft_error("memory allocation for tag failed.");
