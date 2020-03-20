@@ -6,7 +6,7 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 13:20:53 by pandersi          #+#    #+#              #
-#    Updated: 2020/03/17 12:08:29 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/03/20 11:13:32 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ ft_strstr.c ft_strnequ.c ft_strsplit.c ft_strsub.c \
 ft_strtrim.c ft_strnstr.c ft_strrchr.c ft_lstnew.c \
 ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 ft_lstmap.c ft_lstlen.c ft_realloc.c ft_isupper.c \
-ft_lstappend.c ft_strchri.c
+ft_lstappend.c ft_strchri.c ft_itoa_base.c
 
 INCLUDE = includes/libft.h
 
@@ -42,7 +42,7 @@ ft_strncat.o ft_strncmp.o ft_strncpy.o ft_itoa.o ft_count_nbr_length.o ft_strclr
 ft_strjoin.o ft_strmap.o ft_strmapi.o ft_strequ.o ft_strstr.o ft_strnequ.o \
 ft_strsplit.o ft_strsub.o ft_strtrim.o ft_strnstr.o ft_strrchr.o ft_lstnew.o \
 ft_lstdelone.o ft_lstdel.o ft_lstadd.o ft_lstiter.o ft_lstmap.o ft_lstlen.o \
-ft_realloc.o ft_isupper.o ft_lstappend.o ft_strchri.o
+ft_realloc.o ft_isupper.o ft_lstappend.o ft_strchri.o ft_itoa_base.o
 
 
 LIB = ar rc $(NAME) $(OBJ)
