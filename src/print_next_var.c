@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 15:42:56 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/20 17:44:55 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@ int find_specifier(t_tag **format)
 	while (SPECIFIERS[index] != s)
 		index++;
 	return (index);
+}
+
+void	lower_letter(char *c)
+{
+	int i;
+
+	i = ft_tolower(*(c));
+}
+
+char	*convert_number(int nb, int base) 
+{
+	char *print_int;
+
+	if(!(print_int = ft_itoa_base(nb, base)))
+		ft_error("itoa returned a NULL pointer.");
+	return (print_int);
 }
 
 int	print_float(t_tag **format, va_list args)
@@ -58,18 +74,35 @@ int	print_char(t_tag **format, va_list args)
 
 int	print_HEXA(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing hexa WITH CAPITAL LETTERS!");
-	return (10);
+	int i;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, int);
+	print_int = convert_number(i, 16);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
 }
 
 int	print_hexa(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing hexa!");
-	return (10);
+	int i;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, int);
+	print_int = convert_number(i, 16);
+	ft_striter(print_int, lower_letter);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
 }
 
 int	print_unsigned(t_tag **format, va_list args)
@@ -82,25 +115,41 @@ int	print_unsigned(t_tag **format, va_list args)
 
 int	print_octal(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing octals!");
-	return (10);
+	int i;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, int);
+	print_int = convert_number(i, 8);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
 }
 
 int	print_integer(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing integers!");
-	return (10);
+	int i;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, int);
+	print_int = convert_number(i, 10);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
 }
 
 int	print_next_var(t_tag **format, va_list args)
 {
-	int len;
-	int index;
-	int (*prints[10])(t_tag**, va_list);
+	int		len;
+	int		index;
+	int		(*prints[10])(t_tag**, va_list);
 	
 	prints[0] = print_integer;
 	prints[1] = print_integer;
