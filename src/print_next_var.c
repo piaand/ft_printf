@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/20 17:44:55 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 10:14:56 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int find_specifier(t_tag **format)
 	return (index);
 }
 
-void	lower_letter(char *c)
-{
-	int i;
+/*
+** lower_letter function is needed only because ft_striter doens't accept the 
+** function prototype og ft_tolower (it returns the new lower case charater).
+*/
 
-	i = ft_tolower(*(c));
+void	lower_letter(char *str)
+{
+	*(str) = ft_tolower(*(str));
 }
 
 char	*convert_number(int nb, int base) 
@@ -107,10 +110,20 @@ int	print_hexa(t_tag **format, va_list args)
 
 int	print_unsigned(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing unsigned!");
-	return (10);
+	int i;
+	unsigned int u;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, int);
+	u = i;
+	print_int = convert_number(u, 10);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
 }
 
 int	print_octal(t_tag **format, va_list args)
