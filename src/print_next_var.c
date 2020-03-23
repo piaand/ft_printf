@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 12:08:02 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 16:44:29 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	lower_letter(char *str)
 	*(str) = ft_tolower(*(str));
 }
 
-char	*convert_number_unsigned(unsigned int nb, int base) 
+char	*convert_number_unsigned(size_t nb, int base) 
 {
 	char *print_int;
 
@@ -62,10 +62,21 @@ int	print_float(t_tag **format, va_list args)
 
 int	print_pointer(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing pointer!");
-	return (10);
+	size_t memory;
+	size_t len;
+	char *address;
+	char *print_ptr;
+
+	len = 0;
+	memory = va_arg(args, size_t);
+	address = convert_number_unsigned(memory, 16);
+	ft_striter(address, lower_letter);
+	print_ptr = ft_strjoin("0x", address);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		memory = 1;
+	len = ft_strlen(print_ptr);
+	ft_putstr(print_ptr);
+	return (len);
 }
 
 int	print_string(t_tag **format, va_list args)
