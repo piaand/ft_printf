@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 11:36:00 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 11:38:37 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 16:13:11 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 #include "includes/libft.h"
 
-unsigned int	ft_count_digits(unsigned n, int base)
+unsigned int	ft_count_digits(size_t n, int base)
 {
-	unsigned int len;
+	size_t len;
 
 	len = 0;
 	if (n == 0)

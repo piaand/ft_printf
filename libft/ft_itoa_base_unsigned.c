@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 11:31:28 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 11:44:29 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 16:16:22 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 */
 
 
-char	*ft_itoa_base_unsigned(unsigned int value, int base)
+char	*ft_itoa_base_unsigned(size_t value, int base)
 {
-	char			*ascii;
-	unsigned int	len;
+	char	*ascii;
+	size_t	len;
 
 	if (base < 2 || base > 16)
 		return (NULL);

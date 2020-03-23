@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 11:41:39 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 11:52:09 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 16:15:25 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char get_char(unsigned int mod)
 	return (c);
 }
 
-char	*ft_write_base(unsigned int i, unsigned int len, int base, char *ascii)
+char	*ft_write_base(size_t i, size_t len, int base, char *ascii)
 {
 	unsigned int	mod;
 	char			c;
