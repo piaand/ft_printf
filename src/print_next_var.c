@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 16:44:29 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 16:55:31 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,30 @@ int	print_pointer(t_tag **format, va_list args)
 
 int	print_string(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing string!");
-	return (10);
+	char *str;
+	size_t len;
+
+	len = 0;
+	str = va_arg(args, char*);
+	ft_putstr(str);
+	len = ft_strlen(str);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		str = NULL;
+	return (len);
 }
 
 int	print_char(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing char!");
-	return (10);
+	char c;
+	size_t len;
+
+	len = 0;
+	c = va_arg(args, int);
+	ft_putchar(c);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		c = 'a';
+	len = 1;
+	return (len);
 }
 
 int	print_HEXA(t_tag **format, va_list args)
