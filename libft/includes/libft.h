@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:11:54 by pandersi          #+#    #+#             */
-/*   Updated: 2020/03/20 09:48:14 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 11:56:40 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int					ft_strncmp(const char *s1, const char *s2, size_t n);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(int value, int base);
-size_t				ft_count_nbr_length(size_t i);
+char				*ft_itoa_base_unsigned(unsigned int value, int base);
+size_t				ft_count_nbr_length(long n);
+unsigned int		ft_count_digits(unsigned n, int base);
 void				ft_strclr(char *s);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strmap(char const *s, char (*f)(char));
@@ -94,5 +96,6 @@ size_t				ft_lstlen(t_list **alst);
 void				*ft_realloc(void *ptr, size_t res, size_t size);
 int					ft_isupper(int c);
 void				ft_lstappend(t_list **alst, t_list *new);
+char				*ft_write_base(unsigned int i, unsigned int len, int base, char *ascii);
 
 #endif

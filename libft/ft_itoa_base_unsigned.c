@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   ft_itoa_base_unsigned.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/20 09:47:11 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 11:59:46 by piaandersin      ###   ########.fr       */
+/*   Created: 2020/03/23 11:31:28 by piaandersin       #+#    #+#             */
+/*   Updated: 2020/03/23 11:44:29 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,19 @@
 ** minus sign (-). With any other base, value is always considered unsigned.
 */
 
-char	*ft_itoa_base(int value, int base)
+
+char	*ft_itoa_base_unsigned(unsigned int value, int base)
 {
 	char			*ascii;
-	long			i;
-	int				sign;
 	unsigned int	len;
-	unsigned int	u;
 
 	if (base < 2 || base > 16)
 		return (NULL);
-	i = value;
-	sign = 0;
-	if (i < 0 && base == 10)
-	{
-		sign = 1;
-		i *= -1;
-	}
-	u = i;
-	len = ft_count_digits(u, base);
-	len += sign;
+	len = ft_count_digits(value, base);
 	if (!(ascii = ft_strnew(len)))
 		return (NULL);
-	if (sign == 1)
-		ascii[0] = '-';
-	else if (u == 0)
+	else if (value == 0)
 		ascii[0] = '0';
-	ascii = ft_write_base(u, len, base, ascii);
+	ascii = ft_write_base(value, len, base, ascii);
 	return (ascii);
 }

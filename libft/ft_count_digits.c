@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_count_digits.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/24 08:31:49 by pandersi          #+#    #+#             */
-/*   Updated: 2020/03/23 11:59:12 by piaandersin      ###   ########.fr       */
+/*   Created: 2020/03/23 11:36:00 by piaandersin       #+#    #+#             */
+/*   Updated: 2020/03/23 11:38:37 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** counts how many digits the number takes - excluding the negative sign.
+*/
+
 #include "includes/libft.h"
 
-char		*ft_itoa(int n)
+unsigned int	ft_count_digits(unsigned n, int base)
 {
-	char	*ascii;
-	long	i;
-	int		len;
+	unsigned int len;
 
-	i = n;
-	len = ft_count_nbr_length(i);
-	if (!(ascii = ft_strnew(len)))
-		return (NULL);
-	if (i < 0)
+	len = 0;
+	if (n == 0)
+		return (1);
+	while (n > 0)
 	{
-		ascii[0] = '-';
-		i *= -1;
+		len++;
+		n /= base;
 	}
-	else if (i == 0)
-		ascii[0] = '0';
-	while (i > 0)
-	{
-		ascii[--len] = (i % 10) + '0';
-		i /= 10;
-	}
-	return (ascii);
+	return (len);
 }

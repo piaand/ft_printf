@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 10:14:56 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/23 12:08:02 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ int find_specifier(t_tag **format)
 void	lower_letter(char *str)
 {
 	*(str) = ft_tolower(*(str));
+}
+
+char	*convert_number_unsigned(unsigned int nb, int base) 
+{
+	char *print_int;
+
+	if(!(print_int = ft_itoa_base_unsigned(nb, base)))
+		ft_error("itoa returned a NULL pointer.");
+	return (print_int);
 }
 
 char	*convert_number(int nb, int base) 
@@ -111,14 +120,12 @@ int	print_hexa(t_tag **format, va_list args)
 int	print_unsigned(t_tag **format, va_list args)
 {
 	int i;
-	unsigned int u;
 	size_t len;
 	char *print_int;
 
 	len = 0;
-	i = va_arg(args, int);
-	u = i;
-	print_int = convert_number(u, 10);
+	i = va_arg(args, unsigned int);
+	print_int = convert_number_unsigned(i, 10);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		i = 1;
 	len = ft_strlen(print_int);

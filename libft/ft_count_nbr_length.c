@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_count_nbr_length.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pandersi <pandersi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 10:12:33 by pandersi          #+#    #+#             */
-/*   Updated: 2019/11/11 15:24:05 by pandersi         ###   ########.fr       */
+/*   Updated: 2020/03/23 11:58:19 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 
 #include "includes/libft.h"
 
-size_t	ft_count_nbr_length(size_t i)
+size_t	ft_count_nbr_length(long n)
 {
-	size_t		n;
 	size_t		len;
 
-	n = i;
 	len = 0;
 	if (n < 0)
 	{

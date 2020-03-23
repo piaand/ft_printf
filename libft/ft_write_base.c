@@ -1,38 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_write_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/24 08:31:49 by pandersi          #+#    #+#             */
-/*   Updated: 2020/03/23 11:59:12 by piaandersin      ###   ########.fr       */
+/*   Created: 2020/03/23 11:41:39 by piaandersin       #+#    #+#             */
+/*   Updated: 2020/03/23 11:52:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Returns a string representing a number given in variable i converted to base. 
+*/
+
 #include "includes/libft.h"
 
-char		*ft_itoa(int n)
+static char get_char(unsigned int mod)
 {
-	char	*ascii;
-	long	i;
-	int		len;
+	char base_char[] = "0123456789ABCDEF";
+	char c;
 
-	i = n;
-	len = ft_count_nbr_length(i);
-	if (!(ascii = ft_strnew(len)))
-		return (NULL);
-	if (i < 0)
-	{
-		ascii[0] = '-';
-		i *= -1;
-	}
-	else if (i == 0)
-		ascii[0] = '0';
+	c = base_char[mod];
+	return (c);
+}
+
+char	*ft_write_base(unsigned int i, unsigned int len, int base, char *ascii)
+{
+	unsigned int	mod;
+	char			c;
+
 	while (i > 0)
 	{
-		ascii[--len] = (i % 10) + '0';
-		i /= 10;
+		mod = i % base;
+		c = get_char(mod);
+		ascii[--len] = c;
+		i /= base;
 	}
-	return (ascii);
+	return(ascii);
 }
