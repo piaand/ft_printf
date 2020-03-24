@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/24 11:21:11 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/24 16:53:05 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ int find_specifier(t_tag **format)
 	return (index);
 }
 
+/*
+** Due to the fact that double_toint does the conversion only to int,
+** the case where precision == 0 and double value is out on max and min
+** int limits will cause an error.
+*/
+
+
 static char	*convert_number(int nb, int base) 
 {
 	char *print_int;
@@ -33,12 +40,65 @@ static char	*convert_number(int nb, int base)
 	return (print_int);
 }
 
+long double bankers_rounder(long double nb, unsigned int precision)
+{
+	long double rounder;
+	long double d;
+	long long j;
+	unsigned int i;
+
+	rounder = 0.5;
+	if (nb < 0)
+		rounder *= -1;
+	i = precision;
+	while (i-- > 0)
+		rounder /= 10;
+	d = nb;
+	while (precision-- > 0)
+		d *= 10;
+	j = (long long)d;
+	d -=j;
+	if (d == 0.5 && (j % 2 == 0))
+		return (0);
+	else
+		return(rounder);
+}
+
+char *double_toa(long double nb, unsigned int precision)
+{
+	char *integer_nb;
+	long long i;
+
+	precision = 0;
+	i = nb;
+	integer_nb = ft_itoa_base(i, 10);
+	nb -= i;
+	//continue with float part, nb must take the zeros into consideration (0.0056)
+	//take this to library? call ft_double_to_a?
+	return (integer_nb);
+}
+
 int	print_float(t_tag **format, va_list args)
 {
-	(void)format;
-	(void)args;
-	ft_putendl("Printing float!");
-	return (10);
+	long double f;
+	long double rounder;
+	unsigned int precision;
+	size_t len;
+	char *print_float;
+
+	len = 0;
+	f = va_arg(args, long double);
+	if ((*format)->has_value[PRECISION_ON] == '1')
+		precision = (*format)->precision;
+	else
+		precision = 6; 
+	rounder = bankers_rounder(f, precision);
+	f += rounder;
+	print_float = double_toa((float)f, precision);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		len = 0;
+	len = ft_strlen(print_float);
+	return (len);
 }
 
 int	print_string(t_tag **format, va_list args)
@@ -123,17 +183,29 @@ int	print_next_var(t_tag **format, va_list args)
 }
 
 /*unit tests*/
-/*
+
 int main(int argc, char **argv)
 {
+	//2147483647
+	//-2147483648
 	char *str;
+	char *str2;
+	float f;
+	double dd;
+	long double rounder;
 	int i;
 	i = -1;
+	f = -13.9999995;
+	dd = 2147483647.5; 
 	(void)argv;
 	if (argc == 2)
 	{
-		str = ft_itoa_base_unsigned((int)i, 10);
+		str = ft_itoa_base(i, 10);
 		ft_putendl(str);
+		rounder = bankers_rounder(f, 6);
+		f += rounder;
+		str2 = double_toa((float)f, 6);
+		ft_putendl(str2);
 	}
 	else
 	{
@@ -141,4 +213,3 @@ int main(int argc, char **argv)
 	}
 	
 }
-*/
