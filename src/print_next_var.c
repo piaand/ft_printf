@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 11:36:50 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 16:27:37 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ long double bankers_rounder(long double nb, unsigned int precision)
 
 int	print_float(t_tag **format, va_list args)
 {
-	long double f;
+	double f;
 	long double rounder;
 	unsigned int precision;
 	size_t len;
 	char *print_float;
 
 	len = 0;
-	f = va_arg(args, long double);
+	f = va_arg(args, double);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		precision = (*format)->precision;
 	else
@@ -84,6 +84,7 @@ int	print_float(t_tag **format, va_list args)
 	print_float = ft_float_to_a((float)f, precision);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		len = 0;
+	ft_putstr(print_float);
 	len = ft_strlen(print_float);
 	return (len);
 }
@@ -182,16 +183,16 @@ int main(int argc, char **argv)
 	long double rounder;
 	int i;
 	i = -1;
-	f = -13.9999995;
+	f = 0.00995;
 	dd = 2147483647.5; 
 	(void)argv;
 	if (argc == 2)
 	{
 		str = ft_itoa_base(i, 10);
 		ft_putendl(str);
-		rounder = bankers_rounder(f, 6);
+		rounder = bankers_rounder((float)f, 2);
 		f += rounder;
-		str2 = double_toa((float)f, 6);
+		str2 = ft_float_to_a(f, 1);
 		ft_putendl(str2);
 	}
 	else
