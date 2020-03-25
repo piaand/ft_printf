@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:59:12 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 15:18:25 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 15:42:54 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,21 @@ static long double	write_integer_part(char **integer, long double nb)
 
 static char *join_parts(char *integer, char *middle, char *decimal)
 {
-	char *tmp;
 	char *full_float;
 
 	if ((!integer) || (!middle) || (!decimal))
 		return (NULL);
-	if (!(tmp = ft_strjoin(integer, middle)))
+	if (!(integer = ft_strjoin(integer, middle)))
 		return (NULL);
-	ft_strdel(&integer);
 	ft_strdel(&middle);
-	if (!(full_float = ft_strjoin(tmp, decimal)))
-		return (NULL);
-	ft_strdel(&tmp);
+	if (decimal[0] != '0')
+	{
+		if (!(full_float = ft_strjoin(integer, decimal)))
+			return (NULL);
+		ft_strdel(&integer);
+	}
+	else
+		full_float = integer;
 	ft_strdel(&decimal);
 	return (full_float);
 }
