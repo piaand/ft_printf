@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 14:11:54 by pandersi          #+#    #+#             */
-/*   Updated: 2020/03/23 16:17:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 11:29:45 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_itoa(int n);
 char				*ft_itoa_base(int value, int base);
 char				*ft_itoa_base_unsigned(size_t value, int base);
-size_t				ft_count_nbr_length(long n);
+char				*ft_float_to_a(long double nb, unsigned int precision);
+size_t				ft_count_nbr_length(long long n);
 unsigned int		ft_count_digits(size_t n, int base);
 void				ft_strclr(char *s);
 char				*ft_strjoin(char const *s1, char const *s2);

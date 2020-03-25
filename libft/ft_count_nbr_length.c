@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 10:12:33 by pandersi          #+#    #+#             */
-/*   Updated: 2020/03/23 11:58:19 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 10:30:02 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include "includes/libft.h"
 
-size_t	ft_count_nbr_length(long n)
+size_t	ft_count_nbr_length(long long n)
 {
 	size_t		len;
 

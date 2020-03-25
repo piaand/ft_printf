@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/24 16:53:05 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 11:36:50 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,6 @@ long double bankers_rounder(long double nb, unsigned int precision)
 		return(rounder);
 }
 
-char *double_toa(long double nb, unsigned int precision)
-{
-	char *integer_nb;
-	long long i;
-
-	precision = 0;
-	i = nb;
-	integer_nb = ft_itoa_base(i, 10);
-	nb -= i;
-	//continue with float part, nb must take the zeros into consideration (0.0056)
-	//take this to library? call ft_double_to_a?
-	return (integer_nb);
-}
 
 int	print_float(t_tag **format, va_list args)
 {
@@ -94,7 +81,7 @@ int	print_float(t_tag **format, va_list args)
 		precision = 6; 
 	rounder = bankers_rounder(f, precision);
 	f += rounder;
-	print_float = double_toa((float)f, precision);
+	print_float = ft_float_to_a((float)f, precision);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		len = 0;
 	len = ft_strlen(print_float);
@@ -183,7 +170,7 @@ int	print_next_var(t_tag **format, va_list args)
 }
 
 /*unit tests*/
-
+/*
 int main(int argc, char **argv)
 {
 	//2147483647
@@ -213,3 +200,4 @@ int main(int argc, char **argv)
 	}
 	
 }
+*/
