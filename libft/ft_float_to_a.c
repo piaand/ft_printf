@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:59:12 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 14:44:36 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 15:18:25 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 */
 
 #include "includes/libft.h"
-#include <stdio.h>
 
 static char *write_middle_part(unsigned int zeros)
 {
