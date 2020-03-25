@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:59:12 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 15:42:54 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 16:41:21 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ static char *write_middle_part(unsigned int zeros)
 	size_t len;
 
 	len = 1 + zeros;
-	if (!(middle = ft_strnew(len)))
+	if (!(middle = ft_strset(len, '0')))
 		return (NULL);
-	ft_memset(middle, '0', (len * sizeof(char)));
 	middle[0] = '.';
 	return (middle);
 }

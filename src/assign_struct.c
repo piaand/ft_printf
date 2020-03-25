@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 13:32:18 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 16:42:49 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ char	*init_newstring(size_t len, char c)
 {
 	char *str;
 
-	if (!(str = ft_strnew(len)))
+	if (!(str = ft_strset(len, c)))
 		ft_error("memory allocation for string failed.");
-	ft_memset(str, c, (len * sizeof(char)));
 	return (str);
 }
 

@@ -6,7 +6,7 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 13:20:53 by pandersi          #+#    #+#              #
-#    Updated: 2020/03/25 11:29:06 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/03/25 16:40:00 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ ft_strtrim.c ft_strnstr.c ft_strrchr.c ft_lstnew.c \
 ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
 ft_lstmap.c ft_lstlen.c ft_realloc.c ft_isupper.c \
 ft_lstappend.c ft_strchri.c ft_itoa_base.c ft_count_digits.c \
-ft_write_base.c ft_itoa_base_unsigned.c ft_float_to_a.c
+ft_write_base.c ft_itoa_base_unsigned.c ft_float_to_a.c \
+ft_strset.c
 
 
 INCLUDE = includes/libft.h
@@ -45,7 +46,8 @@ ft_strjoin.o ft_strmap.o ft_strmapi.o ft_strequ.o ft_strstr.o ft_strnequ.o \
 ft_strsplit.o ft_strsub.o ft_strtrim.o ft_strnstr.o ft_strrchr.o ft_lstnew.o \
 ft_lstdelone.o ft_lstdel.o ft_lstadd.o ft_lstiter.o ft_lstmap.o ft_lstlen.o \
 ft_realloc.o ft_isupper.o ft_lstappend.o ft_strchri.o ft_itoa_base.o \
-ft_count_digits.o ft_write_base.o ft_itoa_base_unsigned.o ft_float_to_a.o
+ft_count_digits.o ft_write_base.o ft_itoa_base_unsigned.o ft_float_to_a.o \
+ft_strset.o
 
 
 LIB = ar rc $(NAME) $(OBJ)

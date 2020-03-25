@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 16:27:37 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/25 16:43:08 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ int find_specifier(t_tag **format)
 		index++;
 	return (index);
 }
-
-/*
-** Due to the fact that double_toint does the conversion only to int,
-** the case where precision == 0 and double value is out on max and min
-** int limits will cause an error.
-*/
-
 
 static char	*convert_number(int nb, int base) 
 {
