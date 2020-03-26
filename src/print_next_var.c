@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 11:39:56 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 15:34:37 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,6 @@ int	print_char(t_tag **format, va_list args)
 	return (len);
 }
 
-int	print_octal(t_tag **format, va_list args)
-{
-	int i;
-	size_t len;
-	char *print_int;
-
-	len = 0;
-	i = va_arg(args, int);
-	print_int = convert_number(i, 8);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		i = 1;
-	len = ft_strlen(print_int);
-	ft_putstr(print_int);
-	return (len);
-}
 
 int	print_integer(t_tag **format, va_list args)
 {
@@ -85,9 +70,17 @@ int	print_integer(t_tag **format, va_list args)
 
 	len = 0;
 	i = va_arg(args, long long int);
-	print_int = convert_number(i, 10);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		i = 1;
+	if ((*format)->has_value[LENGTH_ON] == '1')
+	{
+		if (ft_strequ((*format)->length, "0h"))
+			print_int = convert_number((short int)i, 10);
+		else if (ft_strequ((*format)->length, "0l"))
+			print_int = convert_number((long int)i, 10);
+		else
+			print_int = convert_number(i, 10);
+	}
+	else
+		print_int = convert_number((int)i, 10);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);

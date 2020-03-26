@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 10:50:15 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 15:28:54 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		print_next_var(t_tag **format, va_list args);
 int		print_unsigned(t_tag **format, va_list args);
 int		print_hexa(t_tag **format, va_list args);
 int		print_pointer(t_tag **format, va_list args);
+int		print_octal(t_tag **format, va_list args);
 int		print_float(t_tag **format, va_list args);
 void	crosscheck_format(t_tag **format);
 

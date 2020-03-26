@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 11:33:12 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 16:10:24 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,19 @@ static void	lower_letter(char *str)
 	*(str) = ft_tolower(*(str));
 }
 
-static char	*convert_number_unsigned(size_t nb, int base) 
+static char	*convert_number_unsigned(size_t nb, int base, t_tag **format) 
 {
 	char *print_int;
-
-	if(!(print_int = ft_itoa_base_unsigned(nb, base)))
-		ft_error("itoa returned a NULL pointer.");
+	if ((*format)->has_value[LENGTH_ON] == '1' && ft_strequ((*format)->length, "0h"))
+	{
+		if(!(print_int = ft_itoa_base_unsigned((unsigned short int)nb, base)))
+			ft_error("itoa returned a NULL pointer.");	
+	}
+	else
+	{
+		if(!(print_int = ft_itoa_base_unsigned(nb, base)))
+			ft_error("itoa returned a NULL pointer.");
+	}
 	return (print_int);
 }
 
@@ -40,11 +47,9 @@ int	print_pointer(t_tag **format, va_list args)
 
 	len = 0;
 	memory = va_arg(args, size_t);
-	address = convert_number_unsigned(memory, 16);
+	address = convert_number_unsigned(memory, 16, format);
 	ft_striter(address, lower_letter);
 	print_ptr = ft_strjoin("0x", address);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		memory = 1;
 	len = ft_strlen(print_ptr);
 	ft_putstr(print_ptr);
 	return (len);
@@ -58,11 +63,25 @@ int	print_hexa(t_tag **format, va_list args)
 
 	len = 0;
 	i = va_arg(args, size_t);
-	print_int = convert_number_unsigned(i, 16);
+	print_int = convert_number_unsigned(i, 16, format);
 	if ((*format)->specifier == 'x')
 		ft_striter(print_int, lower_letter);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		i = 1;
+	len = ft_strlen(print_int);
+	ft_putstr(print_int);
+	return (len);
+}
+
+int	print_octal(t_tag **format, va_list args)
+{
+	size_t i;
+	size_t len;
+	char *print_int;
+
+	len = 0;
+	i = va_arg(args, size_t);
+	print_int = convert_number_unsigned(i, 8, format);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -76,9 +95,7 @@ int	print_unsigned(t_tag **format, va_list args)
 
 	len = 0;
 	i = va_arg(args, size_t);
-	print_int = convert_number_unsigned(i, 10);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		i = 1;
+	print_int = convert_number_unsigned(i, 10, format);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
