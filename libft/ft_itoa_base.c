@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 09:47:11 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 11:59:46 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 15:14:16 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,39 @@
 ** minus sign (-). With any other base, value is always considered unsigned.
 */
 
-char	*ft_itoa_base(int value, int base)
+static size_t itoa_convert(long long int value, int base, int *sign)
 {
-	char			*ascii;
-	long			i;
-	int				sign;
-	unsigned int	len;
-	unsigned int	u;
+	unsigned int	llmin;
+	size_t			u;
+	
+	llmin = 0;
+	if (value == LLONG_MIN)
+	{
+		llmin = 1;
+		value +=llmin;
+	}
+	if (value < 0 && base == 10)
+	{
+		*sign = 1;
+		value *= -1;
+	}
+	u = value;
+	u += llmin;
+	return (u);
+}
+
+char	*ft_itoa_base(long long int value, int base)
+{
+	char	*ascii;
+	int		sign;
+	size_t	len;
+	size_t	u;
 
 	if (base < 2 || base > 16)
 		return (NULL);
-	i = value;
 	sign = 0;
-	if (i < 0 && base == 10)
-	{
-		sign = 1;
-		i *= -1;
-	}
-	u = i;
-	len = ft_count_digits(u, base);
-	len += sign;
+	u = itoa_convert(value, base, &sign);
+	len = ft_count_digits(u, base) + sign;
 	if (!(ascii = ft_strnew(len)))
 		return (NULL);
 	if (sign == 1)

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 10:28:30 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 11:39:56 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,83 +24,13 @@ int find_specifier(t_tag **format)
 	return (index);
 }
 
-static char	*convert_number(int nb, int base) 
+static char	*convert_number(long long int nb, int base) 
 {
 	char *print_int;
 
 	if(!(print_int = ft_itoa_base(nb, base)))
 		ft_error("itoa returned a NULL pointer.");
 	return (print_int);
-}
-
-long double bankers_rounder(long double nb, unsigned int precision)
-{
-	long double rounder;
-	long double d;
-	long long j;
-	unsigned int i;
-
-	rounder = 0.5;
-	if (nb < 0)
-		rounder *= -1;
-	i = precision;
-	while (i-- > 0)
-		rounder /= 10;
-	d = nb;
-	while (precision-- > 0)
-		d *= 10;
-	j = (long long)d;
-	d -=j;
-	if (d == 0.5 && (j % 2 == 0))
-		return (0);
-	else
-		return(rounder);
-}
-
-char *write_float(unsigned int precision, va_list args)
-{
-	double		nb;
-	long double	rounder;
-	char		*nb_str;
-
-	nb = va_arg(args, double); 
-	rounder = bankers_rounder((long double)nb, precision);
-	nb += (double)rounder;
-	nb_str = ft_float_to_a((double)nb, precision);
-	return (nb_str);
-}
-
-char *write_long_double(unsigned int precision, va_list args)
-{
-	long double		nb;
-	long double	rounder;
-	char		*nb_str;
-
-	nb = va_arg(args, long double); 
-	rounder = bankers_rounder(nb, precision);
-	nb += rounder;
-	nb_str = ft_float_to_a(nb, precision);
-	return (nb_str);
-}
-
-int	print_float(t_tag **format, va_list args)
-{
-	unsigned int precision;
-	size_t len;
-	char *print_float;
-
-	len = 0;
-	if ((*format)->has_value[PRECISION_ON] == '1')
-		precision = (*format)->precision;
-	else
-		precision = 6;
-	if ((*format)->has_value[LENGTH_ON] == '1' && (ft_strequ((*format)->length, "0L")))
-		print_float = write_long_double(precision, args);
-	else
-		print_float = write_float(precision, args);
-	ft_putstr(print_float);
-	len = ft_strlen(print_float);
-	return (len);
 }
 
 int	print_string(t_tag **format, va_list args)
@@ -149,12 +79,12 @@ int	print_octal(t_tag **format, va_list args)
 
 int	print_integer(t_tag **format, va_list args)
 {
-	int i;
+	int long long i;
 	size_t len;
 	char *print_int;
 
 	len = 0;
-	i = va_arg(args, int);
+	i = va_arg(args, long long int);
 	print_int = convert_number(i, 10);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		i = 1;
