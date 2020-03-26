@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 16:43:08 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 10:28:30 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,47 @@ long double bankers_rounder(long double nb, unsigned int precision)
 		return(rounder);
 }
 
+char *write_float(unsigned int precision, va_list args)
+{
+	double		nb;
+	long double	rounder;
+	char		*nb_str;
+
+	nb = va_arg(args, double); 
+	rounder = bankers_rounder((long double)nb, precision);
+	nb += (double)rounder;
+	nb_str = ft_float_to_a((double)nb, precision);
+	return (nb_str);
+}
+
+char *write_long_double(unsigned int precision, va_list args)
+{
+	long double		nb;
+	long double	rounder;
+	char		*nb_str;
+
+	nb = va_arg(args, long double); 
+	rounder = bankers_rounder(nb, precision);
+	nb += rounder;
+	nb_str = ft_float_to_a(nb, precision);
+	return (nb_str);
+}
 
 int	print_float(t_tag **format, va_list args)
 {
-	double f;
-	long double rounder;
 	unsigned int precision;
 	size_t len;
 	char *print_float;
 
 	len = 0;
-	f = va_arg(args, double);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		precision = (*format)->precision;
 	else
-		precision = 6; 
-	rounder = bankers_rounder(f, precision);
-	f += rounder;
-	print_float = ft_float_to_a((float)f, precision);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		len = 0;
+		precision = 6;
+	if ((*format)->has_value[LENGTH_ON] == '1' && (ft_strequ((*format)->length, "0L")))
+		print_float = write_long_double(precision, args);
+	else
+		print_float = write_float(precision, args);
 	ft_putstr(print_float);
 	len = ft_strlen(print_float);
 	return (len);
