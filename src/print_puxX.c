@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/24 11:19:40 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 11:33:12 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int	print_pointer(t_tag **format, va_list args)
 
 int	print_hexa(t_tag **format, va_list args)
 {
-	int i;
+	size_t i;
 	size_t len;
 	char *print_int;
 
 	len = 0;
-	i = va_arg(args, int);
+	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 16);
 	if ((*format)->specifier == 'x')
 		ft_striter(print_int, lower_letter);
@@ -70,12 +70,12 @@ int	print_hexa(t_tag **format, va_list args)
 
 int	print_unsigned(t_tag **format, va_list args)
 {
-	int i;
+	size_t i;
 	size_t len;
 	char *print_int;
 
 	len = 0;
-	i = va_arg(args, unsigned int);
+	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 10);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		i = 1;
