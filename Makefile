@@ -6,14 +6,14 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 11:06:14 by piaandersin       #+#    #+#              #
-#    Updated: 2020/03/24 11:21:34 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/03/26 09:44:31 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC = ./src/ft_printf.c ./src/assign_struct.c ./src/print_next_var.c \
-./src/print_puxX.c
+./src/print_puxX.c ./src/crosscheck_format.c 
 
 OBJ = $(subst .c,.o,$(subst src/,,$(SRC)))
 

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/19 15:39:38 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/26 10:01:14 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	print_from_var_list(char *format_tag, va_list args)
 		ft_error("memory allocation for tag failed.");
 	assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
-	//crosscheck_format(&new); //check do all tag arguments go with the specifier
+	crosscheck_format(&new);
 	len =  print_next_var(&new, args);
 	// destroy the new t_tag and release the memory
 	// return the amount of printed characters
