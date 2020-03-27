@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 11:17:53 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 13:09:03 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,49 +22,6 @@ int find_specifier(t_tag **format)
 	while (SPECIFIERS[index] != s)
 		index++;
 	return (index);
-}
-
-char *create_precision_substr(char *nb, size_t len, unsigned int sign)
-{
-	char *tmp;
-
-	if (sign == 1)
-		tmp = ft_strsub(nb, 1, len);
-	else
-		tmp = ft_strdup(nb);
-	if (!tmp)
-		ft_error("creating string dup returned a null pointer.");
-	return (tmp);
-}
-
-char *add_precision(char *nb, unsigned int precision)
-{
-	size_t len;
-	unsigned int sign;
-	char *padding;
-	char *tmp;
-	char *new_nb;
-
-	len = ft_strlen(nb);
-	sign = (nb[0] == '-') ? 1 : 0;
-	if (sign == 1)
-		len--;
-	if (len < precision)
-	{
-		tmp = create_precision_substr(nb, len, sign);
-		if(!(padding = ft_strset((precision - len + sign), '0')))
-			ft_error("creating padding string returned a null pointer.");
-		if (sign == 1)
-			padding[0] = '-';
-		if(!(new_nb = ft_strjoin(padding, tmp)))
-			ft_error("creating precision string returned a null pointer.");
-		ft_strdel(&padding);
-		ft_strdel(&nb);
-		ft_strdel(&tmp);
-	}
-	else
-		new_nb = nb;
-	return (new_nb);
 }
 
 static char	*convert_number(long long int nb, int base) 
