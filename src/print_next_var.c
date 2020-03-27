@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 14:00:28 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 14:17:58 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	print_integer(t_tag **format, va_list args)
 	int long long i;
 	size_t len;
 	char *print_int;
+	char prefix;
 
 	len = 0;
 	i = va_arg(args, long long int);
@@ -86,6 +87,11 @@ int	print_integer(t_tag **format, va_list args)
 	}
 	else
 		print_int = convert_number((int)i, 10);
+	if ((*format)->space == 1 || (*format)->plus == 1)
+	{
+		prefix = ((*format)->plus == 1) ? '+' : ' ';
+		print_int = add_plus_sign(print_int, prefix);
+	}
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = add_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);

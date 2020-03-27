@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 13:09:43 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 14:18:32 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		print_octal(t_tag **format, va_list args);
 int		print_float(t_tag **format, va_list args);
 void	crosscheck_format(t_tag **format);
 char 	*add_padding(char *nb, unsigned int padding);
+char	*add_plus_sign(char *nb, char c);
 
 
 # endif
