@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 10:51:52 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 14:03:46 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,34 @@ static long double bankers_rounder(long double nb, unsigned int precision)
 		return (0);
 	else
 		return(rounder);
+}
+
+char *add_plus_sign(char *nb, char c)
+{
+	char *prefix;
+	char *added;
+
+	if (nb[0] == '-')
+		return (nb);
+	else
+	{
+		if(!(prefix = ft_strset(1, c)))
+			ft_error("creating new string returned a null pointer.");
+		if(!(added = ft_strjoin(prefix, nb)))
+			ft_error("joining strings returned a null pointer.");
+		ft_strdel(&prefix);
+		ft_strdel(&nb);
+		return (added);
+	}
+}
+
+char *alter_by_flags(char *nb, t_tag **format)
+{	
+	if ((*format)->plus == 1)
+		nb = add_plus_sign(nb, '+');
+	else if ((*format)->space == 1)
+		nb = add_plus_sign(nb, ' ');
+	return (nb);
 }
 
 static char *write_float(unsigned int precision, va_list args)
@@ -77,6 +105,8 @@ int	print_float(t_tag **format, va_list args)
 		print_float = write_long_double(precision, args);
 	else
 		print_float = write_float(precision, args);
+	if ((*format)->has_value[FLAG_ON] == '1')
+		print_float = alter_by_flags(print_float, format);
 	ft_putstr(print_float);
 	len = ft_strlen(print_float);
 	return (len);

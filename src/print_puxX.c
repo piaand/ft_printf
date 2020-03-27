@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 11:44:23 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 14:00:55 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	print_hexa(t_tag **format, va_list args)
 	if ((*format)->specifier == 'x')
 		ft_striter(print_int, lower_letter);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_precision(print_int, (*format)->precision);
+		print_int = add_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -83,7 +83,7 @@ int	print_octal(t_tag **format, va_list args)
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 8, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_precision(print_int, (*format)->precision);
+		print_int = add_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -99,7 +99,7 @@ int	print_unsigned(t_tag **format, va_list args)
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 10, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_precision(print_int, (*format)->precision);
+		print_int = add_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);

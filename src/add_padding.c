@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 13:11:46 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 14:03:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static char *create_new_nb(char *nb, size_t len, char sign, unsigned int padding
 char *add_padding(char *nb, unsigned int padding)
 {
 	size_t len;
-	unsigned int sign;
 	char sign;
 	char *new_nb;
 
