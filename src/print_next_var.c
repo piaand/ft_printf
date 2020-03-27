@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 15:34:37 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/27 09:51:57 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	print_string(t_tag **format, va_list args)
 
 	len = 0;
 	str = va_arg(args, char*);
+	if ((*format)->has_value[PRECISION_ON] == '1')
+	{
+		if (!(str = ft_strsub(str, 0, (*format)->precision)))
+			ft_error("creating substring returned a null value.");
+	}
 	ft_putstr(str);
 	len = ft_strlen(str);
 	if ((*format)->has_value[FLAG_ON] == '1')
