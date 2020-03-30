@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 14:03:46 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 10:30:20 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ static long double bankers_rounder(long double nb, unsigned int precision)
 		return(rounder);
 }
 
+char *add_decimal(char *nb)
+{
+	char *postfix;
+	char *added;
+
+	if(!(postfix = ft_strset(1, '.')))
+		ft_error("creating new string returned a null pointer.");
+	if(!(added = ft_strjoin(nb, postfix)))
+		ft_error("joining strings returned a null pointer.");
+	ft_strdel(&postfix);
+	ft_strdel(&nb);
+	return (added);
+}
+
 char *add_plus_sign(char *nb, char c)
 {
 	char *prefix;
@@ -61,6 +75,9 @@ char *alter_by_flags(char *nb, t_tag **format)
 		nb = add_plus_sign(nb, '+');
 	else if ((*format)->space == 1)
 		nb = add_plus_sign(nb, ' ');
+	if ((*format)->hash == 1 && (*format)->has_value[PRECISION_ON] == '1'
+	&& (*format)->precision == 0)
+		nb = add_decimal(nb);
 	return (nb);
 }
 
