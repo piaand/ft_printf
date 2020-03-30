@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 11:36:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 15:36:41 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@
 static void	lower_letter(char *str)
 {
 	*(str) = ft_tolower(*(str));
+}
+
+char *create_padding(char *nb, unsigned int precision)
+{
+	size_t len;
+	unsigned int prefix;
+	int size;
+	char *padded;
+
+	len = ft_strlen(nb);
+	prefix = check_prefix(nb);
+	size = precision - (len - prefix);
+	if (size > 0)
+		padded = add_padding(nb, size);
+	else
+		padded = nb;
+	return (padded);
 }
 
 static char	*convert_number_unsigned(size_t nb, int base, t_tag **format) 
@@ -66,7 +83,7 @@ int	print_hexa(t_tag **format, va_list args)
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 16, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_padding(print_int, (*format)->precision);
+		print_int = create_padding(print_int, (*format)->precision);
 	if ((*format)->hash == 1 && (ft_strlen(print_int) > 0))
 		print_int = add_prefix(print_int, 2, "0X");
 	if ((*format)->specifier == 'x')
@@ -86,7 +103,7 @@ int	print_octal(t_tag **format, va_list args)
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 8, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_padding(print_int, (*format)->precision);
+		print_int = create_padding(print_int, (*format)->precision);
 	if ((*format)->hash == 1)
 		print_int = add_prefix(print_int, 1, "0");
 	len = ft_strlen(print_int);
@@ -104,7 +121,7 @@ int	print_unsigned(t_tag **format, va_list args)
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 10, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_padding(print_int, (*format)->precision);
+		print_int = create_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);

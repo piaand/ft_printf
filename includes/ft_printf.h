@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 11:02:22 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 15:38:05 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,20 @@ typedef struct			s_tag
 	char				*length;
 }						t_tag;
 
-int		ft_printf(const char *format, ...);
-void	ft_error(char *message);
-void	assign_tag_info(t_tag **new, char *instructions);
-int		print_next_var(t_tag **format, va_list args);
-int		print_unsigned(t_tag **format, va_list args);
-int		print_hexa(t_tag **format, va_list args);
-int		print_pointer(t_tag **format, va_list args);
-int		print_octal(t_tag **format, va_list args);
-int		print_float(t_tag **format, va_list args);
-void	crosscheck_format(t_tag **format);
-char 	*add_padding(char *nb, unsigned int padding);
-char	*add_prefix(char *nb, unsigned int len, char *str);
+int				ft_printf(const char *format, ...);
+void			ft_error(char *message);
+void			assign_tag_info(t_tag **new, char *instructions);
+int				print_next_var(t_tag **format, va_list args);
+int				print_unsigned(t_tag **format, va_list args);
+int				print_hexa(t_tag **format, va_list args);
+int				print_pointer(t_tag **format, va_list args);
+int				print_octal(t_tag **format, va_list args);
+int				print_float(t_tag **format, va_list args);
+void			crosscheck_format(t_tag **format);
+char			*create_padding(char *nb, unsigned int precision);
+char 			*add_padding(char *nb, unsigned int padding);
+char			*add_prefix(char *nb, unsigned int len, char *str);
+unsigned int	check_prefix(char *prefix);
 
 
 # endif

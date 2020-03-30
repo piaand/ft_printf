@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 11:01:36 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 15:38:21 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	print_integer(t_tag **format, va_list args)
 		print_int = add_prefix(print_int, 1, prefix);
 	}
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = add_padding(print_int, (*format)->precision);
+		print_int = create_padding(print_int, (*format)->precision);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
