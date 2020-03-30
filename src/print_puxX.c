@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/27 14:00:55 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 09:34:16 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,17 @@ static void	lower_letter(char *str)
 static char	*convert_number_unsigned(size_t nb, int base, t_tag **format) 
 {
 	char *print_int;
-	if ((*format)->has_value[LENGTH_ON] == '1' && ft_strequ((*format)->length, "0h"))
-	{
-		if(!(print_int = ft_itoa_base_unsigned((unsigned short int)nb, base)))
-			ft_error("itoa returned a NULL pointer.");	
-	}
+	
+	if ((*format)->has_value[PRECISION_ON] == '1' && (*format)->precision == 0
+	&& nb == 0 && (!((*format)->specifier == 'p')))
+		print_int = "";
+	else if ((*format)->has_value[LENGTH_ON] == '1' && ft_strequ((*format)->length, "0h"))
+		print_int = ft_itoa_base_unsigned((unsigned short int)nb, base);
 	else
-	{
-		if(!(print_int = ft_itoa_base_unsigned(nb, base)))
-			ft_error("itoa returned a NULL pointer.");
-	}
+		print_int = ft_itoa_base_unsigned(nb, base);
+	if (!print_int)
+		ft_error("itoa returned a NULL pointer.");
+
 	return (print_int);
 }
 
