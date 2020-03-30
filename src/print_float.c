@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 10:30:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 11:43:10 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char *add_decimal(char *nb)
 	return (added);
 }
 
-char *add_plus_sign(char *nb, char c)
+char *add_prefix(char *nb, unsigned int len, char *str)
 {
 	char *prefix;
 	char *added;
@@ -59,12 +59,21 @@ char *add_plus_sign(char *nb, char c)
 		return (nb);
 	else
 	{
-		if(!(prefix = ft_strset(1, c)))
+		if (len == 1)
+			prefix = ft_strset(len, str[0]);
+		else
+			prefix = ft_strdup(str);
+		if (!prefix)
 			ft_error("creating new string returned a null pointer.");
-		if(!(added = ft_strjoin(prefix, nb)))
+		if (ft_strlen(nb) == 0)
+			added = ft_strdup(prefix);
+		else
+			added = ft_strjoin(prefix, nb);
+		if (!added)
 			ft_error("joining strings returned a null pointer.");
 		ft_strdel(&prefix);
-		ft_strdel(&nb);
+		if (nb && *nb)
+			ft_strdel(&nb);
 		return (added);
 	}
 }
@@ -72,9 +81,9 @@ char *add_plus_sign(char *nb, char c)
 char *alter_by_flags(char *nb, t_tag **format)
 {	
 	if ((*format)->plus == 1)
-		nb = add_plus_sign(nb, '+');
+		nb = add_prefix(nb, 1, "+");
 	else if ((*format)->space == 1)
-		nb = add_plus_sign(nb, ' ');
+		nb = add_prefix(nb, 1, " ");
 	if ((*format)->hash == 1 && (*format)->has_value[PRECISION_ON] == '1'
 	&& (*format)->precision == 0)
 		nb = add_decimal(nb);

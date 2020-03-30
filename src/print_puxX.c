@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 09:34:16 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 11:36:20 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 		print_int = ft_itoa_base_unsigned(nb, base);
 	if (!print_int)
 		ft_error("itoa returned a NULL pointer.");
-
 	return (print_int);
 }
 
@@ -50,7 +49,8 @@ int	print_pointer(t_tag **format, va_list args)
 	memory = va_arg(args, size_t);
 	address = convert_number_unsigned(memory, 16, format);
 	ft_striter(address, lower_letter);
-	print_ptr = ft_strjoin("0x", address);
+	if (!(print_ptr = ft_strjoin("0x", address)))
+		ft_error("joining strings retruned NULL pointer.");
 	len = ft_strlen(print_ptr);
 	ft_putstr(print_ptr);
 	return (len);
@@ -65,10 +65,12 @@ int	print_hexa(t_tag **format, va_list args)
 	len = 0;
 	i = va_arg(args, size_t);
 	print_int = convert_number_unsigned(i, 16, format);
-	if ((*format)->specifier == 'x')
-		ft_striter(print_int, lower_letter);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = add_padding(print_int, (*format)->precision);
+	if ((*format)->hash == 1 && (ft_strlen(print_int) > 0))
+		print_int = add_prefix(print_int, 2, "0X");
+	if ((*format)->specifier == 'x')
+		ft_striter(print_int, lower_letter);
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -85,6 +87,8 @@ int	print_octal(t_tag **format, va_list args)
 	print_int = convert_number_unsigned(i, 8, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = add_padding(print_int, (*format)->precision);
+	if ((*format)->hash == 1)
+		print_int = add_prefix(print_int, 1, "0");
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
