@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:17:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 15:53:05 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,7 @@ char *alter_by_flags(char *nb, t_tag **format)
 	if ((*format)->hash == 1 && (*format)->has_value[PRECISION_ON] == '1'
 	&& (*format)->precision == 0)
 		nb = add_decimal(nb);
-	if ((*format)->dash == 1 && (*format)->has_value[WIDTH_ON] == '1')
-		nb = add_margin(nb, (*format)->width, 1);
-	else if ((*format)->zero == 1 && (*format)->has_value[WIDTH_ON] == '1')
+	if ((*format)->zero == 1 && (*format)->has_value[WIDTH_ON] == '1')
 	{
 		size = ((*format)->width) - (ft_strlen(nb));
 		nb = add_padding(nb, size);
@@ -159,6 +157,7 @@ int	print_float(t_tag **format, va_list args)
 {
 	unsigned int precision;
 	size_t len;
+	int left;
 	char *print_float;
 
 	len = 0;
@@ -172,6 +171,11 @@ int	print_float(t_tag **format, va_list args)
 		print_float = write_float(precision, args);
 	if ((*format)->has_value[FLAG_ON] == '1')
 		print_float = alter_by_flags(print_float, format);
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_float = add_margin(print_float, (*format)->width, left);
+	}
 	ft_putstr(print_float);
 	len = ft_strlen(print_float);
 	return (len);

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:38:21 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 16:00:05 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	print_string(t_tag **format, va_list args)
 {
 	char *str;
 	size_t len;
+	int left;
 
 	len = 0;
 	str = va_arg(args, char*);
@@ -45,10 +46,13 @@ int	print_string(t_tag **format, va_list args)
 		if (!(str = ft_strsub(str, 0, (*format)->precision)))
 			ft_error("creating substring returned a null value.");
 	}
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		str = add_margin(str, (*format)->width, left);
+	}
 	ft_putstr(str);
 	len = ft_strlen(str);
-	if ((*format)->has_value[FLAG_ON] == '1')
-		str = NULL;
 	return (len);
 }
 
@@ -71,6 +75,7 @@ int	print_integer(t_tag **format, va_list args)
 {
 	int long long i;
 	size_t len;
+	int left;
 	char *print_int;
 	char sign;
 	char *prefix;
@@ -97,6 +102,11 @@ int	print_integer(t_tag **format, va_list args)
 	}
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = create_padding(print_int, (*format)->precision);
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_int = add_margin(print_int, (*format)->width, left);
+	}
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);

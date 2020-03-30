@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:38:05 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 16:01:26 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void			crosscheck_format(t_tag **format);
 char			*create_padding(char *nb, unsigned int precision);
 char 			*add_padding(char *nb, unsigned int padding);
 char			*add_prefix(char *nb, unsigned int len, char *str);
+char			*add_margin(char *str, unsigned int width, unsigned int left_align);
 unsigned int	check_prefix(char *prefix);
 
 

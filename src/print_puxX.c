@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:36:41 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/30 15:57:15 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	print_pointer(t_tag **format, va_list args)
 {
 	size_t memory;
 	size_t len;
+	int left;
 	char *address;
 	char *print_ptr;
 
@@ -68,6 +69,11 @@ int	print_pointer(t_tag **format, va_list args)
 	ft_striter(address, lower_letter);
 	if (!(print_ptr = ft_strjoin("0x", address)))
 		ft_error("joining strings retruned NULL pointer.");
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_ptr = add_margin(print_ptr, (*format)->width, left);
+	}
 	len = ft_strlen(print_ptr);
 	ft_putstr(print_ptr);
 	return (len);
@@ -77,6 +83,7 @@ int	print_hexa(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
+	int left;
 	char *print_int;
 
 	len = 0;
@@ -88,6 +95,11 @@ int	print_hexa(t_tag **format, va_list args)
 		print_int = add_prefix(print_int, 2, "0X");
 	if ((*format)->specifier == 'x')
 		ft_striter(print_int, lower_letter);
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_int = add_margin(print_int, (*format)->width, left);
+	}
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -97,6 +109,7 @@ int	print_octal(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
+	int left;
 	char *print_int;
 
 	len = 0;
@@ -106,6 +119,11 @@ int	print_octal(t_tag **format, va_list args)
 		print_int = create_padding(print_int, (*format)->precision);
 	if ((*format)->hash == 1)
 		print_int = add_prefix(print_int, 1, "0");
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_int = add_margin(print_int, (*format)->width, left);
+	}
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
@@ -115,6 +133,7 @@ int	print_unsigned(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
+	int left;
 	char *print_int;
 
 	len = 0;
@@ -122,6 +141,11 @@ int	print_unsigned(t_tag **format, va_list args)
 	print_int = convert_number_unsigned(i, 10, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = create_padding(print_int, (*format)->precision);
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		print_int = add_margin(print_int, (*format)->width, left);
+	}
 	len = ft_strlen(print_int);
 	ft_putstr(print_int);
 	return (len);
