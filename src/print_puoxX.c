@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_puxX.c                                       :+:      :+:    :+:   */
+/*   print_puoxX.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:34:42 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 10:04:20 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	print_pointer(t_tag **format, va_list args)
 {
 	size_t memory;
 	size_t len;
-	int left;
 	char *address;
 	char *print_ptr;
 
@@ -47,13 +46,7 @@ int	print_pointer(t_tag **format, va_list args)
 	ft_striter(address, lower_letter);
 	if (!(print_ptr = ft_strjoin("0x", address)))
 		ft_error("joining strings retruned NULL pointer.");
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_ptr = add_margin(print_ptr, (*format)->width, left);
-	}
-	len = ft_strlen(print_ptr);
-	ft_putstr(print_ptr);
+	len = print_final_string(format, print_ptr);
 	return (len);
 }
 
@@ -61,25 +54,18 @@ int	print_hexa(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
-	int left;
-	char *print_int;
+	char *hexa_printout;
 
 	len = 0;
 	i = va_arg(args, size_t);
-	print_int = convert_number_unsigned(i, 16, format);
+	hexa_printout = convert_number_unsigned(i, 16, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = create_padding(print_int, (*format)->precision);
-	if ((*format)->hash == 1 && (ft_strlen(print_int) > 0))
-		print_int = add_prefix(print_int, 2, "0X");
+		hexa_printout = create_padding(hexa_printout, (*format)->precision);
+	if ((*format)->hash == 1 && (ft_strlen(hexa_printout) > 0))
+		hexa_printout = add_prefix(hexa_printout, 2, "0X");
 	if ((*format)->specifier == 'x')
-		ft_striter(print_int, lower_letter);
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_int = add_margin(print_int, (*format)->width, left);
-	}
-	len = ft_strlen(print_int);
-	ft_putstr(print_int);
+		ft_striter(hexa_printout, lower_letter);
+	len = print_final_string(format, hexa_printout);
 	return (len);
 }
 
@@ -87,23 +73,16 @@ int	print_octal(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
-	int left;
-	char *print_int;
+	char *print_octal;
 
 	len = 0;
 	i = va_arg(args, size_t);
-	print_int = convert_number_unsigned(i, 8, format);
+	print_octal = convert_number_unsigned(i, 8, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = create_padding(print_int, (*format)->precision);
+		print_octal = create_padding(print_octal, (*format)->precision);
 	if ((*format)->hash == 1)
-		print_int = add_prefix(print_int, 1, "0");
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_int = add_margin(print_int, (*format)->width, left);
-	}
-	len = ft_strlen(print_int);
-	ft_putstr(print_int);
+		print_octal = add_prefix(print_octal, 1, "0");
+	len = print_final_string(format, print_octal);
 	return (len);
 }
 
@@ -111,20 +90,13 @@ int	print_unsigned(t_tag **format, va_list args)
 {
 	size_t i;
 	size_t len;
-	int left;
-	char *print_int;
+	char *print_unsigned;
 
 	len = 0;
 	i = va_arg(args, size_t);
-	print_int = convert_number_unsigned(i, 10, format);
+	print_unsigned = convert_number_unsigned(i, 10, format);
 	if ((*format)->has_value[PRECISION_ON] == '1')
-		print_int = create_padding(print_int, (*format)->precision);
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_int = add_margin(print_int, (*format)->width, left);
-	}
-	len = ft_strlen(print_int);
-	ft_putstr(print_int);
+		print_unsigned = create_padding(print_unsigned, (*format)->precision);
+	len = print_final_string(format, print_unsigned);
 	return (len);
 }

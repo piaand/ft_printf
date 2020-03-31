@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:20:08 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 10:06:04 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,26 @@ static int find_specifier(t_tag **format)
 	return (index);
 }
 
+size_t print_final_string(t_tag **format, char *str)
+{
+	size_t len;
+	unsigned int left;
+	
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		str = add_margin(str, (*format)->width, left);
+	}
+	ft_putstr(str);
+	len = ft_strlen(str);
+	ft_strdel(&str);
+	return (len);
+}
+
 int	print_string(t_tag **format, va_list args)
 {
 	char *str;
 	size_t len;
-	int left;
 
 	len = 0;
 	str = va_arg(args, char*);
@@ -37,13 +52,7 @@ int	print_string(t_tag **format, va_list args)
 		if (!(str = ft_strsub(str, 0, (*format)->precision)))
 			ft_error("creating substring returned a null value.");
 	}
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		str = add_margin(str, (*format)->width, left);
-	}
-	ft_putstr(str);
-	len = ft_strlen(str);
+	len = print_final_string(format, str);
 	return (len);
 }
 
@@ -52,24 +61,12 @@ int	print_char(t_tag **format, va_list args)
 	char c;
 	char *str;
 	size_t len;
-	int left;
 
 	len = 0;
 	c = va_arg(args, int);
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		if (!(str = ft_strset(1, 'c')))
-			ft_error("creating a new string returned a null value.");
-		str = add_margin(str, (*format)->width, left);
-		ft_putstr(str);
-		len = ft_strlen(str);
-	}
-	else
-	{
-		ft_putchar(c);
-		len = 1;
-	}
+	if (!(str = ft_strset(1, 'c')))
+		ft_error("creating a new string returned a null value.");
+	len = print_final_string(format, str);
 	return (len);
 }
 

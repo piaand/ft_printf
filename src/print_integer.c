@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:18:31 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:57:08 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	print_integer(t_tag **format, va_list args)
 {
 	int long long i;
 	size_t len;
-	int left;
 	char *print_int;
 	char sign;
 	char *prefix;
@@ -52,12 +51,6 @@ int	print_integer(t_tag **format, va_list args)
 	}
 	if ((*format)->has_value[PRECISION_ON] == '1')
 		print_int = create_padding(print_int, (*format)->precision);
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_int = add_margin(print_int, (*format)->width, left);
-	}
-	len = ft_strlen(print_int);
-	ft_putstr(print_int);
+	len = print_final_string(format, print_int);
 	return (len);
 }
