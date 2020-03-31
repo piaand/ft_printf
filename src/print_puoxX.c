@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:57:15 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:34:42 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,6 @@
 ** lower_letter function is needed only because ft_striter doens't accept the 
 ** function prototype og ft_tolower (it returns the new lower case charater).
 */
-
-static void	lower_letter(char *str)
-{
-	*(str) = ft_tolower(*(str));
-}
-
-char *create_padding(char *nb, unsigned int precision)
-{
-	size_t len;
-	unsigned int prefix;
-	int size;
-	char *padded;
-
-	len = ft_strlen(nb);
-	prefix = check_prefix(nb);
-	size = precision - (len - prefix);
-	if (size > 0)
-		padded = add_padding(nb, size);
-	else
-		padded = nb;
-	return (padded);
-}
 
 static char	*convert_number_unsigned(size_t nb, int base, t_tag **format) 
 {

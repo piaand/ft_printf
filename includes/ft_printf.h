@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 16:01:26 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:34:10 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ typedef struct			s_tag
 int				ft_printf(const char *format, ...);
 void			ft_error(char *message);
 void			assign_tag_info(t_tag **new, char *instructions);
+void			insert_width(t_tag **new, char **str);
+void			insert_precision(t_tag **new, char **str);
+void			insert_length(t_tag **new, char **str);
 int				print_next_var(t_tag **format, va_list args);
+int				print_integer(t_tag **format, va_list args);
 int				print_unsigned(t_tag **format, va_list args);
 int				print_hexa(t_tag **format, va_list args);
 int				print_pointer(t_tag **format, va_list args);
@@ -54,6 +58,8 @@ char			*create_padding(char *nb, unsigned int precision);
 char 			*add_padding(char *nb, unsigned int padding);
 char			*add_prefix(char *nb, unsigned int len, char *str);
 char			*add_margin(char *str, unsigned int width, unsigned int left_align);
+char			*add_decimal(char *nb);
+void			lower_letter(char *str);
 unsigned int	check_prefix(char *prefix);
 
 

@@ -6,25 +6,12 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/30 15:36:44 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:34:40 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-unsigned int check_prefix(char *prefix)
-{
-	unsigned int len;
-
-	len = 0;
-	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+' || prefix[0] == '0')
-	{
-		len++;
-		if (prefix[1] == 'x' || prefix[1] == 'X')
-			len++;
-	}
-	return (len);
-}
 
 static char *subtract_value(char *nb, size_t len, unsigned int len_pre)
 {
@@ -93,4 +80,21 @@ char *add_padding(char *nb, unsigned int padding)
 	}
 	new_nb = create_new_nb(nb, prefix, len_pre, padding);
 	return (new_nb);
+}
+
+char *create_padding(char *nb, unsigned int precision)
+{
+	size_t len;
+	unsigned int prefix;
+	int size;
+	char *padded;
+
+	len = ft_strlen(nb);
+	prefix = check_prefix(nb);
+	size = precision - (len - prefix);
+	if (size > 0)
+		padded = add_padding(nb, size);
+	else
+		padded = nb;
+	return (padded);
 }

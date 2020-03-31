@@ -6,19 +6,11 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 08:51:03 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:10:12 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-void	ft_error(char *message)
-{
-	ft_putstr("Error: ");
-	ft_putendl(message);
-	ft_putendl("\nSystem exits.");
-	exit(1);
-}
 
 void free_format_tag(t_tag *format)
 {
@@ -129,4 +121,3 @@ int ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
-

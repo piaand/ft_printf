@@ -6,17 +6,25 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 16:42:49 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 09:09:48 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../includes/ft_printf.h"
 
+void	ft_error(char *message)
+{
+	ft_putstr("Error: ");
+	ft_putendl(message);
+	ft_putendl("\nSystem exits.");
+	exit(1);
+}
+
 /*
 ** space ignored when plus, 0 ignored when minus
 */
 
-void	check_flag_override(t_tag **t)
+static void	check_flag_override(t_tag **t)
 {
 	t_tag *new;
 
@@ -25,125 +33,6 @@ void	check_flag_override(t_tag **t)
 		new->space = 0;
 	if (new->zero == 1 && new->dash == 1)
 		new->zero = 0;
-}
-
-char	*init_newstring(size_t len, char c)
-{
-	char *str;
-
-	if (!(str = ft_strset(len, c)))
-		ft_error("memory allocation for string failed.");
-	return (str);
-}
-
-void	init_tag(t_tag **t)
-{
-	char *status;
-	char *len;
-	t_tag *new;
-
-	new = *t;
-	status = init_newstring(4, '0');
-	new->has_value = status;
-	len = init_newstring(2, '0');
-	new->length = len;
-	new->hash = 0;
-	new->space = 0;
-	new->zero = 0;
-	new->dash = 0;
-	new->plus = 0;
-	new->width = 0;
-	new->precision = 0;
-}
-
-int subtract_number(char **str)
-{
-	size_t len;
-	int res;
-	char *nb;
-
-	len = 0;
-	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
-	{
-		len++;
-		(*str)++;
-	}
-	if (!(nb = ft_strnew(len)))
-		ft_error("memory allocation for string failed.");
-	while (len > 0)
-	{
-		(*str)--;
-		len--;
-	}
-	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
-	{
-		nb[len] = *(*str);
-		(*str)++;
-		len++;
-	}
-	res = ft_atoi(nb);
-	ft_strdel(&nb);
-	return(res);
-}
-
-char *create_length(char first, char second)
-{
-	char *str;
-
-	if (!(str = ft_strnew(2)))
-		ft_error("memory allocation for string failed.");
-	str[0] = first;
-	str[1] = second;
-	return(str);
-}
-
-void insert_length(t_tag **new, char **str)
-{
-	(*new)->has_value[LENGTH_ON] = '1';
-	if ((*(*str)) == 'h')
-	{
-		if ((*(*str + 1)) == 'h')
-		{
-			(*new)->length = create_length('h', 'h');
-			(*str)++;
-		}
-		else
-			(*new)->length = create_length('0', 'h');
-	}
-	else if ((*(*str)) == 'l')
-	{
-		if ((*(*str + 1)) == 'l')
-		{
-			(*new)->length = create_length('l', 'l');
-			(*str)++;
-		}
-		else
-			(*new)->length = create_length('0', 'l');
-	}
-	else if ((*(*str)) == 'L')
-		(*new)->length = create_length('0', 'L');
-	(*str)++;
-}
-
-void insert_precision(t_tag **new, char **str)
-{
-	int precision;
-
-	(*str)++;
-	precision = 0;
-	(*new)->has_value[PRECISION_ON] = '1';
-	if (ft_isdigit(*(*str)) && (*(*str)) != '\0')
-		precision = subtract_number(str);
-	(*new)->precision = precision;
-}
-
-void	insert_width(t_tag **new, char **str) 
-{
-	int res;
-
-	(*new)->has_value[WIDTH_ON] = '1';
-	res = subtract_number(str);
-	(*new)->width = res;
 }
 
 void	insert_flags(t_tag **new, char **str)
@@ -173,6 +62,28 @@ void	insert_flags(t_tag **new, char **str)
 			flag_done = 1;
 	}
 	check_flag_override(new);
+}
+
+static void	init_tag(t_tag **t)
+{
+	char *status;
+	char *len;
+	t_tag *new;
+
+	new = *t;
+	if (!(status = ft_strset(4, '0')))
+		ft_error("memory allocation for string failed.");
+	new->has_value = status;
+	if(!(len = ft_strset(2, '0')))
+		ft_error("memory allocation for string failed.");
+	new->length = len;
+	new->hash = 0;
+	new->space = 0;
+	new->zero = 0;
+	new->dash = 0;
+	new->plus = 0;
+	new->width = 0;
+	new->precision = 0;
 }
 
 void	assign_tag_info(t_tag **new, char *instructions)
