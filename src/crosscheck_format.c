@@ -6,11 +6,16 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:33:57 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 11:07:07 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** lower_letter function is needed only because ft_striter doens't accept the 
+** function prototype og ft_tolower (it returns the new lower case charater).
+*/
 
 void	lower_letter(char *str)
 {

@@ -6,14 +6,14 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 11:06:14 by piaandersin       #+#    #+#              #
-#    Updated: 2020/03/31 09:37:27 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/03/31 11:01:08 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
 SRC = ./src/ft_printf.c ./src/assign_struct.c ./src/print_next_var.c \
-./src/print_puoxX.c ./src/crosscheck_format.c ./src/print_float.c \
+./src/print_unsigned.c ./src/crosscheck_format.c ./src/print_float.c \
 ./src/add_padding.c ./src/insert_width_precision_length.c \
 ./src/print_integer.c 
 

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 10:06:04 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 11:31:34 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ size_t print_final_string(t_tag **format, char *str)
 	}
 	ft_putstr(str);
 	len = ft_strlen(str);
-	ft_strdel(&str);
 	return (len);
 }
 
@@ -78,13 +77,13 @@ int	print_next_var(t_tag **format, va_list args)
 	
 	prints[0] = print_integer;
 	prints[1] = print_integer;
-	prints[2] = print_octal;
+	prints[2] = print_unsigned;
 	prints[3] = print_unsigned;
-	prints[4] = print_hexa;
-	prints[5] = print_hexa;
+	prints[4] = print_unsigned;
+	prints[5] = print_unsigned;
 	prints[6] = print_char;
 	prints[7] = print_string;
-	prints[8] = print_pointer;
+	prints[8] = print_unsigned;
 	prints[9] = print_float;
 	index = find_specifier(format);
 	len = prints[index](format, args);
