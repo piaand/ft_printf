@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:57:08 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 11:54:06 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@ static char	*convert_number(long long int nb, int base)
 	return (print_int);
 }
 
-int	print_integer(t_tag **format, va_list args)
+static char *control_length(t_tag **format, long long i)
 {
-	int long long i;
-	size_t len;
 	char *print_int;
-	char sign;
-	char *prefix;
-
-	len = 0;
-	i = va_arg(args, long long int);
+	
 	if ((*format)->has_value[LENGTH_ON] == '1')
 	{
 		if (ft_strequ((*format)->length, "0h"))
@@ -42,6 +36,20 @@ int	print_integer(t_tag **format, va_list args)
 	}
 	else
 		print_int = convert_number((int)i, 10);
+	return (print_int);
+}
+
+int	print_integer(t_tag **format, va_list args)
+{
+	long long i;
+	size_t len;
+	char *print_int;
+	char sign;
+	char *prefix;
+
+	len = 0;
+	i = va_arg(args, long long int);
+	print_int = control_length(format, i);
 	if ((*format)->space == 1 || (*format)->plus == 1)
 	{
 		sign = ((*format)->plus == 1) ? '+' : ' ';

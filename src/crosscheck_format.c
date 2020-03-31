@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:07:07 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 11:51:22 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ void	lower_letter(char *str)
 	*(str) = ft_tolower(*(str));
 }
 
-unsigned int check_prefix(char *prefix)
-{
-	unsigned int len;
-
-	len = 0;
-	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+' || prefix[0] == '0')
-	{
-		len++;
-		if (prefix[1] == 'x' || prefix[1] == 'X')
-			len++;
-	}
-	return (len);
-}
 
 char *add_decimal(char *nb)
 {

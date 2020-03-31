@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:31:34 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 12:09:20 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	print_char(t_tag **format, va_list args)
 
 	len = 0;
 	c = va_arg(args, int);
-	if (!(str = ft_strset(1, 'c')))
+	if (!(str = ft_strset(1, c)))
 		ft_error("creating a new string returned a null value.");
 	len = print_final_string(format, str);
 	return (len);

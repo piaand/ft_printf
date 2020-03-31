@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:34:40 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 11:43:31 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,24 @@ static char *create_new_nb(char *nb, char *sign, unsigned int prefix, unsigned i
 }
 
 /*
+** Returns the length of a prefix in a number.
+*/
+
+unsigned int check_prefix(char *prefix)
+{
+	unsigned int len;
+
+	len = 0;
+	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+' || prefix[0] == '0')
+	{
+		len++;
+		if (prefix[1] == 'x' || prefix[1] == 'X')
+			len++;
+	}
+	return (len);
+}
+
+/*
 ** Returns a string where padding amount of zeros is written between prefix
 ** and actual value
 */
@@ -81,6 +99,10 @@ char *add_padding(char *nb, unsigned int padding)
 	new_nb = create_new_nb(nb, prefix, len_pre, padding);
 	return (new_nb);
 }
+
+/*
+** Calculated the number of zeros in the padding for integers
+*/
 
 char *create_padding(char *nb, unsigned int precision)
 {
