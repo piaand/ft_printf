@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 10:01:14 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 08:51:03 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@ void	ft_error(char *message)
 {
 	ft_putstr("Error: ");
 	ft_putendl(message);
-	ft_putendl("\n\nSystem exits.");
+	ft_putendl("\nSystem exits.");
 	exit(1);
+}
+
+void free_format_tag(t_tag *format)
+{
+	ft_strdel(&(format->has_value));
+	ft_strdel(&(format->length));
+	free(format);
 }
 
 char *find_tag(const char **str)
@@ -60,8 +67,7 @@ int	print_from_var_list(char *format_tag, va_list args)
 	ft_strdel(&format_tag);
 	crosscheck_format(&new);
 	len =  print_next_var(&new, args);
-	// destroy the new t_tag and release the memory
-	// return the amount of printed characters
+	free_format_tag(new);
 	return (len);
 }
 
@@ -124,5 +130,3 @@ int ft_printf(const char *format, ...)
 	return (len);
 }
 
-
-/* TEST MAIN FOR READING FORMAT AT INPUT */
