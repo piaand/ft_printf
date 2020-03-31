@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:54:34 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 12:17:13 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ void			insert_length(t_tag **new, char **str);
 int				print_next_var(t_tag **format, va_list args);
 int				print_integer(t_tag **format, va_list args);
 int				print_unsigned(t_tag **format, va_list args);
-int				print_hexa(t_tag **format, va_list args);
-int				print_pointer(t_tag **format, va_list args);
-int				print_octal(t_tag **format, va_list args);
 int				print_float(t_tag **format, va_list args);
 void			crosscheck_format(t_tag **format);
 size_t 			print_final_string(t_tag **format, char *str);
@@ -60,7 +57,6 @@ char 			*add_padding(char *nb, unsigned int padding);
 char			*add_prefix(char *nb, unsigned int len, char *str);
 char			*add_margin(char *str, unsigned int width, unsigned int left_align);
 char			*add_decimal(char *nb);
-void			lower_letter(char *str);
 unsigned int	check_prefix(char *prefix);
 
 

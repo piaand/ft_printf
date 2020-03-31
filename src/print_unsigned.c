@@ -6,11 +6,21 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:13:45 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 12:16:38 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+
+/*
+** lower_letter function is needed only because ft_striter doens't accept the 
+** function prototype og ft_tolower (it returns the new lower case charater).
+*/
+
+static void	lower_letter(char *str)
+{
+	*(str) = ft_tolower(*(str));
+}
 
 static char	*convert_number_unsigned(size_t nb, int base, t_tag **format) 
 {

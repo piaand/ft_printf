@@ -6,22 +6,11 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:51:22 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/03/31 12:17:17 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-
-/*
-** lower_letter function is needed only because ft_striter doens't accept the 
-** function prototype og ft_tolower (it returns the new lower case charater).
-*/
-
-void	lower_letter(char *str)
-{
-	*(str) = ft_tolower(*(str));
-}
-
 
 char *add_decimal(char *nb)
 {
