@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:24:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 13:22:22 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static long double bankers_rounder(long double nb, unsigned int precision)
 
 static char *alter_by_flags(char *nb, t_tag **format)
 {	
-	unsigned int size;
+	int size;
 
 	size = 0;
 	if ((*format)->plus == 1)
@@ -51,7 +51,8 @@ static char *alter_by_flags(char *nb, t_tag **format)
 	if ((*format)->zero == 1 && (*format)->has_value[WIDTH_ON] == '1')
 	{
 		size = ((*format)->width) - (ft_strlen(nb));
-		nb = add_padding(nb, size);
+		if (size > 0)
+			nb = add_padding(nb, size);
 	}
 	return (nb);
 }

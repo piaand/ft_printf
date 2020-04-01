@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:43:31 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 13:17:19 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char *add_padding(char *nb, unsigned int padding)
 char *create_padding(char *nb, unsigned int precision)
 {
 	size_t len;
-	unsigned int prefix;
+	int prefix;
 	int size;
 	char *padded;
 
