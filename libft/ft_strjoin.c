@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pandersi <pandersi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 11:19:42 by pandersi          #+#    #+#             */
-/*   Updated: 2019/11/11 15:41:12 by pandersi         ###   ########.fr       */
+/*   Updated: 2020/04/01 17:18:20 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if ((!s1) && (!s2))
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	len = (s1) ? ft_strlen(s1) : 0;
+	len = (s2) ? len + ft_strlen(s2) : len;
+	len++;
 	if (!(join = ft_strnew(len)))
 		return (NULL);
 	temp = join;
-	while (*s1 != '\0')
+	while (s1 && *s1 != '\0')
 	{
 		*join = *s1;
 		join++;
 		s1++;
 	}
-	while (*s2 != '\0')
+	while (s2 && *s2 != '\0')
 	{
 		*join = *s2;
 		join++;

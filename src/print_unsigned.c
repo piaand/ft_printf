@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 15:35:37 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 16:49:12 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char *create_prefix(char specifier, unsigned int hash_on, char *nb)
 	{
 		if (specifier == 'o')
 			nb = add_prefix(nb, 1, "0");
-		else if (len > 0 && (specifier == 'x' || specifier == 'X'))
+		else if (len > 0 && (specifier == 'x' || specifier == 'X') && nb[0] != '0')
 			nb = add_prefix(nb, 2, "0X");
 	}
 	else if (specifier == 'p')

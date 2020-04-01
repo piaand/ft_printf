@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 15:26:23 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 16:40:32 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,10 @@ unsigned int check_prefix(char *prefix)
 	unsigned int len;
 
 	len = 0;
-	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+'/* || prefix[0] == '0'*/)
-	{
+	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+')
 		len++;
-		if (prefix[1] == 'x' || prefix[1] == 'X')
-			len++;
-	}
+	else if (prefix[0] == '0' && prefix[1] == 'X')
+		len = 2;
 	return (len);
 }
 

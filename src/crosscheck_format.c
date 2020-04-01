@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 14:41:57 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 17:22:13 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ char *add_margin(char *str, unsigned int width, unsigned int left_align)
 	char *margin;
 	char *new_str;
 
-	len = ft_strlen(str);
+	if (!str)
+		len = 1;
+	else
+		len = ft_strlen(str);
 	diff = 0;
 	if (width > len)
 	{
