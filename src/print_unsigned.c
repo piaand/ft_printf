@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 12:16:38 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 15:35:37 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ int	print_unsigned(t_tag **format, va_list args)
 		print_unsigned = convert_number_unsigned(i, 8, format);
 	else
 		print_unsigned = convert_number_unsigned(i, 16, format);
-	if ((*format)->has_value[PRECISION_ON] == '1' && c != 'p')
-		print_unsigned = create_padding(print_unsigned, (*format)->precision);
 	if (c != 'u')
 		print_unsigned = create_prefix(c, (*format)->hash, print_unsigned);
+	if ((*format)->has_value[PRECISION_ON] == '1' && c != 'p')
+		print_unsigned = create_padding(print_unsigned, (*format)->precision, 1);
+	else if ((*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
+		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
 	if (c == 'x' || c == 'p')
 		ft_striter(print_unsigned, lower_letter);
 	len = print_final_string(format, print_unsigned);

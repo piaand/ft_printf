@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 13:17:19 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/01 15:26:23 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ unsigned int check_prefix(char *prefix)
 	unsigned int len;
 
 	len = 0;
-	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+' || prefix[0] == '0')
+	if (prefix[0] == '-' || prefix[0] == ' ' || prefix[0] == '+'/* || prefix[0] == '0'*/)
 	{
 		len++;
 		if (prefix[1] == 'x' || prefix[1] == 'X')
@@ -104,7 +104,7 @@ char *add_padding(char *nb, unsigned int padding)
 ** Calculated the number of zeros in the padding for integers
 */
 
-char *create_padding(char *nb, unsigned int precision)
+char *create_padding(char *nb, unsigned int space, unsigned int precision)
 {
 	size_t len;
 	int prefix;
@@ -112,8 +112,13 @@ char *create_padding(char *nb, unsigned int precision)
 	char *padded;
 
 	len = ft_strlen(nb);
-	prefix = check_prefix(nb);
-	size = precision - (len - prefix);
+	if (precision == 1)
+	{
+		prefix = check_prefix(nb);
+		size = space - (len - prefix);
+	}
+	else
+		size = space - len;
 	if (size > 0)
 		padded = add_padding(nb, size);
 	else
