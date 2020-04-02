@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 14:54:00 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 15:12:49 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 		else if (ft_strequ((*format)->length, "hh"))
 			print_int = ft_itoa_base_unsigned((unsigned char)nb, base);
 	}
+	else if (c == 'p')
+		print_int = ft_itoa_base_unsigned(nb, base);
 	else
 		print_int = ft_itoa_base_unsigned((unsigned int)nb, base);
 	if (!print_int)
