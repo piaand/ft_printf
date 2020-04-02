@@ -6,16 +6,16 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 12:05:26 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 16:32:06 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-static int find_specifier(t_tag **format)
+static int	find_specifier(t_tag **format)
 {
-	char s;
-	int index;
+	char	s;
+	int		index;
 
 	s = (*format)->specifier;
 	index = 0;
@@ -24,11 +24,11 @@ static int find_specifier(t_tag **format)
 	return (index);
 }
 
-size_t print_final_string(t_tag **format, char *str, int char_null)
+size_t		print_final_string(t_tag **format, char *str, int char_null)
 {
-	size_t len;
-	unsigned int left;
-	
+	size_t			len;
+	unsigned int	left;
+
 	left = 0;
 	if ((*format)->has_value[WIDTH_ON] == '1')
 	{
@@ -55,17 +55,17 @@ size_t print_final_string(t_tag **format, char *str, int char_null)
 	return (len);
 }
 
-int	print_string(t_tag **format, va_list args)
+int			print_string(t_tag **format, va_list args)
 {
-	char *str;
-	char *output;
-	size_t len;
+	char	*str;
+	char	*output;
+	size_t	len;
 
 	len = 0;
 	str = va_arg(args, char*);
 	if (!str)
 		output = ft_strdup("(null)");
-	else 
+	else
 		output = ft_strdup(str);
 	if (!output)
 		ft_error("creating dublicate string returned a null value");
@@ -78,12 +78,12 @@ int	print_string(t_tag **format, va_list args)
 	return (len);
 }
 
-int	print_char(t_tag **format, va_list args)
+int			print_char(t_tag **format, va_list args)
 {
-	char c;
-	char *str;
-	int char_null;
-	size_t len;
+	char	c;
+	char	*str;
+	int		char_null;
+	size_t	len;
 
 	len = 0;
 	c = va_arg(args, int);
@@ -97,12 +97,12 @@ int	print_char(t_tag **format, va_list args)
 	return (len);
 }
 
-int	print_next_var(t_tag **format, va_list args)
+int			print_next_var(t_tag **format, va_list args)
 {
 	int		len;
 	int		index;
 	int		(*prints[10])(t_tag**, va_list);
-	
+
 	prints[0] = print_integer;
 	prints[1] = print_integer;
 	prints[2] = print_unsigned;

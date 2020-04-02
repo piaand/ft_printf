@@ -6,13 +6,13 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:09:48 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 16:06:43 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
+#include "../includes/ft_printf.h"
 
-void	ft_error(char *message)
+void		ft_error(char *message)
 {
 	ft_putstr("Error: ");
 	ft_putendl(message);
@@ -35,10 +35,10 @@ static void	check_flag_override(t_tag **t)
 		new->zero = 0;
 }
 
-void	insert_flags(t_tag **new, char **str)
+void		insert_flags(t_tag **new, char **str)
 {
-	int flag_done;
-	char *found;
+	int		flag_done;
+	char	*found;
 
 	(*new)->has_value[FLAG_ON] = '1';
 	flag_done = 0;
@@ -66,15 +66,15 @@ void	insert_flags(t_tag **new, char **str)
 
 static void	init_tag(t_tag **t)
 {
-	char *status;
-	char *len;
-	t_tag *new;
+	char	*status;
+	char	*len;
+	t_tag	*new;
 
 	new = *t;
 	if (!(status = ft_strset(4, '0')))
 		ft_error("memory allocation for string failed.");
 	new->has_value = status;
-	if(!(len = ft_strset(2, '0')))
+	if (!(len = ft_strset(2, '0')))
 		ft_error("memory allocation for string failed.");
 	new->length = len;
 	new->hash = 0;
@@ -86,10 +86,10 @@ static void	init_tag(t_tag **t)
 	new->precision = 0;
 }
 
-void	assign_tag_info(t_tag **new, char *instructions)
+void		assign_tag_info(t_tag **new, char *instructions)
 {
-	int i;
-	char *found;
+	int		i;
+	char	*found;
 
 	found = NULL;
 	i = 0;

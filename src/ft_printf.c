@@ -6,26 +6,26 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 11:23:33 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 16:11:28 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void free_format_tag(t_tag *format)
+void	free_format_tag(t_tag *format)
 {
 	ft_strdel(&(format->has_value));
 	ft_strdel(&(format->length));
 	free(format);
 }
 
-char *find_tag(const char **str)
+char	*find_tag(const char **str)
 {
-	char *format_tag;
-	char *temp;
-	char *found;
-	unsigned int i;
-	
+	char			*format_tag;
+	char			*temp;
+	char			*found;
+	unsigned int	i;
+
 	format_tag = NULL;
 	if (!(temp = ft_strnew(ft_strlen(*str))))
 		ft_error("memory allocation for string failed.");
@@ -47,10 +47,10 @@ char *find_tag(const char **str)
 	return (format_tag);
 }
 
-int	print_from_var_list(char *format_tag, va_list args)
+int		print_from_var_list(char *format_tag, va_list args)
 {
-	t_tag *new;
-	int len;
+	t_tag	*new;
+	int		len;
 
 	len = 0;
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
@@ -58,7 +58,7 @@ int	print_from_var_list(char *format_tag, va_list args)
 	assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
 	crosscheck_format(&new);
-	len =  print_next_var(&new, args);
+	len = print_next_var(&new, args);
 	free_format_tag(new);
 	return (len);
 }
@@ -67,11 +67,11 @@ int	print_from_var_list(char *format_tag, va_list args)
 ** Returns the amount of printed argument characters
 */
 
-int	print_argument(const char **input, va_list args)
+int		print_argument(const char **input, va_list args)
 {
-	char *format_tag;
-	int len_var;
-	size_t i;
+	char	*format_tag;
+	int		len_var;
+	size_t	i;
 
 	format_tag = find_tag(input);
 	i = 0;
@@ -86,7 +86,7 @@ int	print_argument(const char **input, va_list args)
 		len_var = 1;
 	}
 	else
-		 len_var = print_from_var_list(format_tag, args);
+		len_var = print_from_var_list(format_tag, args);
 	return (len_var);
 }
 
@@ -94,10 +94,10 @@ int	print_argument(const char **input, va_list args)
 ** Returns the amount of printed characters
 */
 
-int ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
-	size_t len;
-	size_t len_var;
+	size_t	len;
+	size_t	len_var;
 	va_list	args;
 
 	len = 0;
