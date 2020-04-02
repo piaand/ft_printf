@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 16:49:12 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 11:21:35 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ int	print_unsigned(t_tag **format, va_list args)
 		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
 	if (c == 'x' || c == 'p')
 		ft_striter(print_unsigned, lower_letter);
-	len = print_final_string(format, print_unsigned);
+	len = print_final_string(format, print_unsigned, 0);
 	return (len);
 }

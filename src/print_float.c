@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 13:22:22 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 12:07:31 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	print_float(t_tag **format, va_list args)
 	if ((*format)->has_value[WIDTH_ON] == '1')
 	{
 		left = ((*format)->dash == 1) ? 1 : 0;
-		print_float = add_margin(print_float, (*format)->width, left);
+		print_float = add_margin(print_float, (*format)->width, left, 0);
 	}
 	ft_putstr(print_float);
 	len = ft_strlen(print_float);

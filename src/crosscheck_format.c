@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 17:22:13 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 12:06:07 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ char *add_prefix(char *nb, unsigned int len, char *str)
 	}
 }
 
-char *add_margin(char *str, unsigned int width, unsigned int left_align)
+char *add_margin(char *str, unsigned int width, unsigned int left_align, int char_null)
 {
 	size_t len;
 	unsigned int diff;
 	char *margin;
 	char *new_str;
 
-	if (!str)
+	if (char_null)
 		len = 1;
 	else
 		len = ft_strlen(str);

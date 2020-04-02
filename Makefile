@@ -6,7 +6,7 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 11:06:14 by piaandersin       #+#    #+#              #
-#    Updated: 2020/03/31 11:01:08 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/04/02 09:23:09 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INCLUDE = ./includes/ft_printf.h
 
 INCL = -I ./includes -I ./libft/includes
 
-LIBFT = ./libft/libft.a
+LIBFT = cp libft/libft.a ./libftprintf.a
 
 LIB = ar rc $(NAME) $(OBJ)
 
@@ -32,6 +32,7 @@ all: $(NAME)
 $(NAME):
 	make -C libft/ fclean && make -C libft/
 	gcc -c -Wall -Wextra -Werror $(SRC) $(INCLUDE)
+	$(LIBFT)
 	$(LIB)
 
 .PHONY: clean

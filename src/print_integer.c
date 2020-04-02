@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 15:26:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 11:22:24 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,6 @@ int	print_integer(t_tag **format, va_list args)
 		print_int = create_padding(print_int, (*format)->precision, 1);
 	else if ((*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
 		print_int = create_padding(print_int, (*format)->width, 0);
-	len = print_final_string(format, print_int);
+	len = print_final_string(format, print_int, 0);
 	return (len);
 }

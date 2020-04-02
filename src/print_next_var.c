@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/01 17:31:20 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 12:05:26 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,32 @@ static int find_specifier(t_tag **format)
 	return (index);
 }
 
-size_t print_final_string(t_tag **format, char *str)
+size_t print_final_string(t_tag **format, char *str, int char_null)
 {
 	size_t len;
 	unsigned int left;
 	
+	left = 0;
 	if ((*format)->has_value[WIDTH_ON] == '1')
 	{
 		left = ((*format)->dash == 1) ? 1 : 0;
-		str = add_margin(str, (*format)->width, left);
+		str = add_margin(str, (*format)->width, left, char_null);
 	}
-	ft_putstr(str);
 	len = ft_strlen(str);
+	if (char_null && left)
+	{
+		write(1, "\0", 1);
+		ft_putstr(str);
+		len++;
+	}
+	else if (char_null)
+	{
+		ft_putstr(str);
+		write(1, "\0", 1);
+		len++;
+	}
+	else
+		ft_putstr(str);
 	if (str && *str)
 		ft_strdel(&str);
 	return (len);
@@ -60,7 +74,7 @@ int	print_string(t_tag **format, va_list args)
 		if (!(output = ft_strsub(output, 0, (*format)->precision)))
 			ft_error("creating substring returned a null value.");
 	}
-	len = print_final_string(format, output);
+	len = print_final_string(format, output, 0);
 	return (len);
 }
 
@@ -68,18 +82,18 @@ int	print_char(t_tag **format, va_list args)
 {
 	char c;
 	char *str;
+	int char_null;
 	size_t len;
 
 	len = 0;
 	c = va_arg(args, int);
 	if (c == 0)
-		str = NULL;
+		char_null = 1;
 	else
-	{
-		if (!(str = ft_strset(1, c)))
-			ft_error("creating a new string returned a null value.");
-	}
-	len = print_final_string(format, str);
+		char_null = 0;
+	if (!(str = ft_strset(1, c)))
+		ft_error("creating a new string returned a null value.");
+	len = print_final_string(format, str, char_null);
 	return (len);
 }
 
