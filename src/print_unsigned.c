@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 11:21:35 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 14:54:00 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,20 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 	if ((*format)->has_value[PRECISION_ON] == '1' && (*format)->precision == 0
 	&& nb == 0 && (c != 'p'))
 		print_int = "";
-	else if ((*format)->has_value[LENGTH_ON] == '1' && ft_strequ((*format)->length, "0h"))
-		print_int = ft_itoa_base_unsigned((unsigned short int)nb, base);
+	else if ((*format)->has_value[LENGTH_ON] == '1')
+	{
+		print_int = NULL;
+		if (ft_strequ((*format)->length, "0h"))
+			print_int = ft_itoa_base_unsigned((unsigned short int)nb, base);
+		else if (ft_strequ((*format)->length, "0l"))
+			print_int = ft_itoa_base_unsigned((unsigned long int)nb, base);
+		else if (ft_strequ((*format)->length, "ll"))
+			print_int = ft_itoa_base_unsigned((unsigned long long int)nb, base);
+		else if (ft_strequ((*format)->length, "hh"))
+			print_int = ft_itoa_base_unsigned((unsigned char)nb, base);
+	}
 	else
-		print_int = ft_itoa_base_unsigned(nb, base);
+		print_int = ft_itoa_base_unsigned((unsigned int)nb, base);
 	if (!print_int)
 		ft_error("itoa returned a NULL pointer.");
 	return (print_int);
@@ -65,7 +75,7 @@ int	print_unsigned(t_tag **format, va_list args)
 	char c;
 
 	c = (*format)->specifier;
-	i = va_arg(args, size_t);
+	i = va_arg(args, unsigned long);
 	if (c == 'u')
 		print_unsigned = convert_number_unsigned(i, 10, format);
 	else if (c == 'o')
