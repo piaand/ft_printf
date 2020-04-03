@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 12:59:25 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 16:11:51 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ size_t		print_final_string(t_tag **format, char *str, int char_null)
 	if ((*format)->has_value[WIDTH_ON] == '1')
 	{
 		left = ((*format)->dash == 1) ? 1 : 0;
-		str = add_margin(str, (*format)->width, left, char_null);
+		if (!(str = add_margin(str, (*format)->width, left, char_null)))
+			return (-1);
 	}
 	len = ft_strlen(str);
 	if (char_null && left)
@@ -50,8 +51,7 @@ size_t		print_final_string(t_tag **format, char *str, int char_null)
 	}
 	else
 		ft_putstr(str);
-	if (str && *str)
-		ft_strdel(&str);
+	ft_strdel(&str);
 	return (len);
 }
 

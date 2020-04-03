@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 17:07:09 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 16:27:30 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ char	*add_decimal(char *nb)
 	char *added;
 
 	if (!(postfix = ft_strset(1, '.')))
-		ft_error("creating new string returned a null pointer.");
-	if (!(added = ft_strjoin(nb, postfix)))
-		ft_error("joining strings returned a null pointer.");
+		return (NULL);
+	added = ft_strjoin(nb, postfix);
 	ft_strdel(&postfix);
 	ft_strdel(&nb);
 	return (added);
@@ -40,13 +39,15 @@ char	*add_prefix(char *nb, unsigned int len, char *str)
 		else
 			prefix = ft_strdup(str);
 		if (!prefix)
-			ft_error("creating new string returned a null pointer.");
+		{
+			if (nb && *nb)
+				ft_strdel(&nb);
+			return (NULL);
+		}
 		if (ft_strlen(nb) == 0)
 			added = ft_strdup(prefix);
 		else
 			added = ft_strjoin(prefix, nb);
-		if (!added)
-			ft_error("joining strings returned a null pointer.");
 		ft_strdel(&prefix);
 		if (nb && *nb)
 			ft_strdel(&nb);
@@ -68,15 +69,18 @@ int char_null)
 	{
 		diff = width - len;
 		if (!(margin = ft_strset(diff, ' ')))
-			ft_error("creating new string returned a null pointer.");
+		{
+			if (str && *str)
+				ft_strdel(&str);
+			str = NULL;
+		}
 		if (left_align == 1)
 			new_str = ft_strjoin(str, margin);
 		else
 			new_str = ft_strjoin(margin, str);
-		if (!new_str)
-			ft_error("string join returned a null pointer.");
-		ft_strdel(&margin);
-		if (len > 0)
+		if (margin)
+			ft_strdel(&margin);
+		if (str && *str)
 			ft_strdel(&str);
 		return (new_str);
 	}

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 16:03:33 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 16:11:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static char		*subtract_value(char *nb, size_t len, unsigned int len_pre)
 		tmp = ft_strsub(nb, len_pre, len);
 	else
 		tmp = ft_strdup(nb);
-	if (!tmp)
-		ft_error("creating string dup returned a null pointer.");
 	return (tmp);
 }
 
@@ -33,21 +31,23 @@ unsigned int padding_size)
 	char *value;
 	char *new_nb;
 
-	value = subtract_value(nb, ft_strlen(nb), prefix);
 	if (!(padding = ft_strset(padding_size, '0')))
-		ft_error("creating padding string returned a null pointer.");
+	{
+		ft_strdel(&sign);
+		ft_strdel(&nb);
+		value = NULL;
+	}
+	else
+		value = subtract_value(nb, ft_strlen(nb), prefix);
 	if (prefix > 0)
 	{
-		if (!(tmp = ft_strjoin(sign, padding)))
-			ft_error("creating tmp string returned a null pointer.");
-		ft_strdel(&sign);
+		tmp = ft_strjoin(sign, padding);
 		new_nb = ft_strjoin(tmp, value);
 		ft_strdel(&tmp);
 	}
 	else
 		new_nb = ft_strjoin(padding, value);
-	if (!new_nb)
-		ft_error("creating padded string failed.");
+	ft_strdel(&sign);
 	ft_strdel(&padding);
 	ft_strdel(&value);
 	ft_strdel(&nb);
@@ -91,7 +91,10 @@ char			*add_padding(char *nb, unsigned int padding)
 		if (len_pre > 0)
 		{
 			if (!(prefix = ft_strsub(nb, 0, len_pre)))
-				ft_error("creating substring returned a null pointer.");
+			{
+				ft_strdel(&prefix);
+				return (NULL);
+			}
 		}
 	}
 	new_nb = create_new_nb(nb, prefix, len_pre, padding);

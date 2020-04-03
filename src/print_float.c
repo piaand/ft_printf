@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 12:04:33 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 16:38:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int					print_float(t_tag **format, va_list args)
 {
 	unsigned int	precision;
 	size_t			len;
-	int				left;
 	char			*print_float;
 
 	len = 0;
@@ -88,14 +87,10 @@ int					print_float(t_tag **format, va_list args)
 		print_float = write_long_double(precision, args);
 	else
 		print_float = write_float(precision, args);
-	if ((*format)->has_value[FLAG_ON] == '1')
+	if (print_float && (*format)->has_value[FLAG_ON] == '1')
 		print_float = alter_by_flags(print_float, format);
-	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
-		left = ((*format)->dash == 1) ? 1 : 0;
-		print_float = add_margin(print_float, (*format)->width, left, 0);
-	}
-	ft_putstr(print_float);
-	len = ft_strlen(print_float);
+	if (!print_float)
+		return (-1);
+	len = print_final_string(format, print_float, 0);
 	return (len);
 }

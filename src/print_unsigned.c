@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 16:35:32 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 17:17:59 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 		print_int = ft_itoa_base_unsigned(nb, base);
 	else
 		print_int = ft_itoa_base_unsigned((unsigned int)nb, base);
-	if (!print_int)
-		ft_error("itoa returned a NULL pointer.");
 	return (print_int);
 }
 
@@ -56,6 +54,8 @@ char		*create_prefix(char specifier, unsigned int hash_on, char *nb)
 {
 	size_t len;
 
+	if (!nb)
+		return (nb);
 	len = ft_strlen(nb);
 	if (hash_on == 1)
 	{
@@ -87,13 +87,15 @@ int			print_unsigned(t_tag **format, va_list args)
 		print_unsigned = convert_number_unsigned(i, 16, format);
 	if (c != 'u')
 		print_unsigned = create_prefix(c, (*format)->hash, print_unsigned);
-	if ((*format)->has_value[PRECISION_ON] == '1' && c != 'p')
+	if (print_unsigned && (*format)->has_value[PRECISION_ON] == '1' && c != 'p')
 		print_unsigned = create_padding(print_unsigned,
 		(*format)->precision, 1);
-	else if ((*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
+	else if (print_unsigned && (*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
 		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
-	if (c == 'x' || c == 'p')
+	if (print_unsigned && (c == 'x' || c == 'p'))
 		ft_striter(print_unsigned, lower_letter);
+	if (!print_unsigned)
+		return (-1);
 	len = print_final_string(format, print_unsigned, 0);
 	return (len);
 }

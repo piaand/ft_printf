@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 16:27:42 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 16:36:05 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char	*convert_number(long long int nb, int base, t_tag **format)
 	if ((*format)->has_value[PRECISION_ON] == '1' &&
 	(*format)->precision == 0 && nb == 0)
 		print_int = "";
-	else if (!(print_int = ft_itoa_base(nb, base)))
-		ft_error("itoa returned a NULL pointer.");
+	else
+		print_int = ft_itoa_base(nb, base);
 	return (print_int);
 }
 
@@ -44,28 +44,41 @@ static char	*control_length(t_tag **format, long long i)
 	return (print_int);
 }
 
+static char	*create_prefix(t_tag **format, char *nb)
+{
+	char	sign;
+	char	*prefix;
+	
+	sign = ((*format)->plus == 1) ? '+' : ' ';
+	if (!(prefix = ft_strset(1, sign)))
+	{
+		ft_strdel(&nb);
+		return (NULL);
+	}
+	nb = add_prefix(nb, 1, prefix);
+	ft_strdel(&prefix);
+	return (nb);
+}
+
 int			print_integer(t_tag **format, va_list args)
 {
 	long long	i;
 	size_t		len;
 	char		*print_int;
-	char		sign;
-	char		*prefix;
 
 	len = 0;
 	i = va_arg(args, long long int);
-	print_int = control_length(format, i);
+	if (!(print_int = control_length(format, i)))
+		return (-1);
 	if ((*format)->space == 1 || (*format)->plus == 1)
-	{
-		sign = ((*format)->plus == 1) ? '+' : ' ';
-		if (!(prefix = ft_strset(1, sign)))
-			ft_error("creating new string returned a null value.");
-		print_int = add_prefix(print_int, 1, prefix);
-	}
-	if ((*format)->has_value[PRECISION_ON] == '1')
+		print_int = create_prefix(format, print_int);
+	if (print_int && ((*format)->has_value[PRECISION_ON] == '1'))
 		print_int = create_padding(print_int, (*format)->precision, 1);
-	else if ((*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
+	else if ( print_int && (*format)->has_value[WIDTH_ON] == '1' &&
+	(*format)->zero == 1)
 		print_int = create_padding(print_int, (*format)->width, 0);
+	if (!print_int)
+		return (-1);
 	len = print_final_string(format, print_int, 0);
 	return (len);
 }
