@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 16:32:06 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 12:59:25 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			print_string(t_tag **format, va_list args)
 {
 	char	*str;
 	char	*output;
+	char	*tmp;
 	size_t	len;
 
 	len = 0;
@@ -68,11 +69,16 @@ int			print_string(t_tag **format, va_list args)
 	else
 		output = ft_strdup(str);
 	if (!output)
-		ft_error("creating dublicate string returned a null value");
+		return (-1);
 	if ((*format)->has_value[PRECISION_ON] == '1')
 	{
-		if (!(output = ft_strsub(output, 0, (*format)->precision)))
-			ft_error("creating substring returned a null value.");
+		if (!(tmp = ft_strsub(output, 0, (*format)->precision)))
+		{
+			ft_strdel(&output);
+			return (-1);
+		}
+		ft_strdel(&output);
+		output = tmp;
 	}
 	len = print_final_string(format, output, 0);
 	return (len);
@@ -92,7 +98,7 @@ int			print_char(t_tag **format, va_list args)
 	else
 		char_null = 0;
 	if (!(str = ft_strset(1, c)))
-		ft_error("creating a new string returned a null value.");
+		return (-1);
 	len = print_final_string(format, str, char_null);
 	return (len);
 }

@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 16:11:28 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 12:50:11 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 void	free_format_tag(t_tag *format)
 {
-	ft_strdel(&(format->has_value));
-	ft_strdel(&(format->length));
-	free(format);
+	if (format)
+	{
+		ft_strdel(&(format->has_value));
+		ft_strdel(&(format->length));
+		free(format);
+	}
 }
 
 char	*find_tag(const char **str)
@@ -28,7 +31,7 @@ char	*find_tag(const char **str)
 
 	format_tag = NULL;
 	if (!(temp = ft_strnew(ft_strlen(*str))))
-		ft_error("memory allocation for string failed.");
+		return (NULL);
 	temp = ft_strcpy(temp, *str);
 	if (temp[0] == '%')
 		format_tag = ft_strsub(temp, 0, 1);
@@ -51,12 +54,19 @@ int		print_from_var_list(char *format_tag, va_list args)
 {
 	t_tag	*new;
 	int		len;
+	int		ok;
 
+	ok = 0;
 	len = 0;
 	if (!(new = (t_tag*)ft_memalloc(sizeof(t_tag))))
-		ft_error("memory allocation for tag failed.");
-	assign_tag_info(&new, format_tag);
+	{
+		ft_strdel(&format_tag);
+		return (-1);
+	}
+	ok = assign_tag_info(&new, format_tag);
 	ft_strdel(&format_tag);
+	if (ok < 0)
+		return (-1);
 	crosscheck_format(&new);
 	len = print_next_var(&new, args);
 	free_format_tag(new);
@@ -73,7 +83,8 @@ int		print_argument(const char **input, va_list args)
 	int		len_var;
 	size_t	i;
 
-	format_tag = find_tag(input);
+	if (!(format_tag = find_tag(input)))
+		return (-1);
 	i = 0;
 	while (i < ft_strlen(format_tag))
 	{
@@ -115,6 +126,8 @@ int		ft_printf(const char *format, ...)
 		{
 			format++;
 			len_var = print_argument(&format, args);
+			if (len_var < 0)
+				return (-1);
 			len += len_var;
 		}
 	}
