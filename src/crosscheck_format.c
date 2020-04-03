@@ -6,27 +6,27 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 12:06:07 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 17:07:09 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-char *add_decimal(char *nb)
+char	*add_decimal(char *nb)
 {
 	char *postfix;
 	char *added;
 
-	if(!(postfix = ft_strset(1, '.')))
+	if (!(postfix = ft_strset(1, '.')))
 		ft_error("creating new string returned a null pointer.");
-	if(!(added = ft_strjoin(nb, postfix)))
+	if (!(added = ft_strjoin(nb, postfix)))
 		ft_error("joining strings returned a null pointer.");
 	ft_strdel(&postfix);
 	ft_strdel(&nb);
 	return (added);
 }
 
-char *add_prefix(char *nb, unsigned int len, char *str)
+char	*add_prefix(char *nb, unsigned int len, char *str)
 {
 	char *prefix;
 	char *added;
@@ -54,22 +54,20 @@ char *add_prefix(char *nb, unsigned int len, char *str)
 	}
 }
 
-char *add_margin(char *str, unsigned int width, unsigned int left_align, int char_null)
+char	*add_margin(char *str, unsigned int width, unsigned int left_align,
+int char_null)
 {
-	size_t len;
-	unsigned int diff;
-	char *margin;
-	char *new_str;
+	size_t			len;
+	unsigned int	diff;
+	char			*margin;
+	char			*new_str;
 
-	if (char_null)
-		len = 1;
-	else
-		len = ft_strlen(str);
+	len = (char_null == 1) ? 1 : ft_strlen(str);
 	diff = 0;
 	if (width > len)
 	{
 		diff = width - len;
-		if(!(margin = ft_strset(diff, ' ')))
+		if (!(margin = ft_strset(diff, ' ')))
 			ft_error("creating new string returned a null pointer.");
 		if (left_align == 1)
 			new_str = ft_strjoin(str, margin);
@@ -78,15 +76,15 @@ char *add_margin(char *str, unsigned int width, unsigned int left_align, int cha
 		if (!new_str)
 			ft_error("string join returned a null pointer.");
 		ft_strdel(&margin);
-		if(len > 0)
+		if (len > 0)
 			ft_strdel(&str);
 		return (new_str);
 	}
 	else
-		return (str);	
+		return (str);
 }
 
-int check_length(char specifier, char *length)
+int		check_length(char specifier, char *length)
 {
 	if (specifier == 'c' || specifier == 's' || specifier == 'p')
 		return (0);

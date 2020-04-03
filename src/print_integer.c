@@ -6,27 +6,28 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 13:25:52 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 16:27:42 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-static char	*convert_number(long long int nb, int base, t_tag **format) 
+static char	*convert_number(long long int nb, int base, t_tag **format)
 {
 	char *print_int;
 
-	if ((*format)->has_value[PRECISION_ON] == '1' && (*format)->precision == 0 && nb == 0)
+	if ((*format)->has_value[PRECISION_ON] == '1' &&
+	(*format)->precision == 0 && nb == 0)
 		print_int = "";
-	else if(!(print_int = ft_itoa_base(nb, base)))
+	else if (!(print_int = ft_itoa_base(nb, base)))
 		ft_error("itoa returned a NULL pointer.");
 	return (print_int);
 }
 
-static char *control_length(t_tag **format, long long i)
+static char	*control_length(t_tag **format, long long i)
 {
 	char *print_int;
-	
+
 	if ((*format)->has_value[LENGTH_ON] == '1')
 	{
 		if (ft_strequ((*format)->length, "0h"))
@@ -43,13 +44,13 @@ static char *control_length(t_tag **format, long long i)
 	return (print_int);
 }
 
-int	print_integer(t_tag **format, va_list args)
+int			print_integer(t_tag **format, va_list args)
 {
-	long long i;
-	size_t len;
-	char *print_int;
-	char sign;
-	char *prefix;
+	long long	i;
+	size_t		len;
+	char		*print_int;
+	char		sign;
+	char		*prefix;
 
 	len = 0;
 	i = va_arg(args, long long int);
@@ -57,7 +58,7 @@ int	print_integer(t_tag **format, va_list args)
 	if ((*format)->space == 1 || (*format)->plus == 1)
 	{
 		sign = ((*format)->plus == 1) ? '+' : ' ';
-		if(!(prefix = ft_strset(1, sign)))
+		if (!(prefix = ft_strset(1, sign)))
 			ft_error("creating new string returned a null value.");
 		print_int = add_prefix(print_int, 1, prefix);
 	}

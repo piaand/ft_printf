@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   insert_width_precision.c                           :+:      :+:    :+:   */
+/*   insert_width_precision_length.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 08:58:42 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/31 09:06:18 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/02 17:04:58 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/ft_printf.h"
+#include "../includes/ft_printf.h"
 
-static int subtract_number(char **str)
+static int	subtract_number(char **str)
 {
-	size_t len;
-	int res;
-	char *nb;
+	size_t	len;
+	int		res;
+	char	*nb;
 
 	len = 0;
 	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
@@ -39,10 +39,10 @@ static int subtract_number(char **str)
 	}
 	res = ft_atoi(nb);
 	ft_strdel(&nb);
-	return(res);
+	return (res);
 }
 
-char *create_length(char first, char second)
+static char	*create_length(char first, char second)
 {
 	char *str;
 
@@ -50,10 +50,10 @@ char *create_length(char first, char second)
 		ft_error("memory allocation for string failed.");
 	str[0] = first;
 	str[1] = second;
-	return(str);
+	return (str);
 }
 
-void insert_length(t_tag **new, char **str)
+void		insert_length(t_tag **new, char **str)
 {
 	(*new)->has_value[LENGTH_ON] = '1';
 	if ((*(*str)) == 'h')
@@ -81,7 +81,7 @@ void insert_length(t_tag **new, char **str)
 	(*str)++;
 }
 
-void insert_precision(t_tag **new, char **str)
+void		insert_precision(t_tag **new, char **str)
 {
 	int precision;
 
@@ -93,7 +93,7 @@ void insert_precision(t_tag **new, char **str)
 	(*new)->precision = precision;
 }
 
-void	insert_width(t_tag **new, char **str) 
+void		insert_width(t_tag **new, char **str)
 {
 	int res;
 

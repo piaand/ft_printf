@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:59:12 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/25 16:41:21 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/03 11:46:48 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,29 @@ static unsigned int write_decimal_part(char **decimal, long double nb, unsigned 
 
 static long double	write_integer_part(char **integer, long double nb)
 {
-	char *integer_part;
-	long long i;
+	char		*integer_part;
+	long long	i;
+	char		*tmp;
 	
 	i = nb;
+	tmp = *integer;
 	if (!(integer_part = ft_itoa_base(i, 10)))
-		*integer = NULL;
+		tmp = NULL;
 	else
-		ft_strcpy(*integer, integer_part);
+		ft_strcpy(tmp, integer_part);
 	ft_strdel(&integer_part);
+	if (nb < 0 && nb > -1)
+	{
+		if (!(integer_part = ft_strset(2, '0')))
+			tmp = NULL;
+		else
+		{
+			integer_part[0] = '-';
+			ft_strdel(&tmp);
+			if (!(tmp = strdup(integer_part)))
+				tmp = NULL;
+		}
+	}
 	if (nb < 0)
 	{
 		nb *= -1;
