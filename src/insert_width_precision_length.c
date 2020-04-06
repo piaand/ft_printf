@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 08:58:42 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 10:28:00 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 17:07:23 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	subtract_number(char **str)
 	return (res);
 }
 
-static char	*create_length(char first, char second)
+static char	*create_length(t_tag **format, char first, char second)
 {
 	char *str;
 
@@ -50,6 +50,7 @@ static char	*create_length(char first, char second)
 		return (NULL);
 	str[0] = first;
 	str[1] = second;
+	ft_strdel(&(*format)->length);
 	return (str);
 }
 
@@ -60,24 +61,24 @@ void		insert_length(t_tag **new, char **str)
 	{
 		if ((*(*str + 1)) == 'h')
 		{
-			(*new)->length = create_length('h', 'h');
+			(*new)->length = create_length(new, 'h', 'h');
 			(*str)++;
 		}
 		else
-			(*new)->length = create_length('0', 'h');
+			(*new)->length = create_length(new, '0', 'h');
 	}
 	else if ((*(*str)) == 'l')
 	{
 		if ((*(*str + 1)) == 'l')
 		{
-			(*new)->length = create_length('l', 'l');
+			(*new)->length = create_length(new, 'l', 'l');
 			(*str)++;
 		}
 		else
-			(*new)->length = create_length('0', 'l');
+			(*new)->length = create_length(new, '0', 'l');
 	}
 	else if ((*(*str)) == 'L')
-		(*new)->length = create_length('0', 'L');
+		(*new)->length = create_length(new, '0', 'L');
 	(*str)++;
 }
 

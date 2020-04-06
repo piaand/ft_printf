@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 16:58:19 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 17:43:51 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ long long	empty_number(t_tag **format)
 	unsigned int margin;
 
 	specifier = (*format)->specifier;
+	margin = (*format)->width;
 	if (specifier == 'd' || specifier == 'i')
 	{
 		if (!(tmp = ft_strset(1, '1')))
 			return (-1);
 		tmp = format_integer(tmp, format);
 		len = ft_strlen(tmp);
-		margin = (*format)->width;
 		if (len == 1 && margin > 0)
 		{
 			if (!(nb = ft_strset(margin, ' ')))
@@ -95,7 +95,9 @@ long long	empty_number(t_tag **format)
 				ft_strdel(&tmp);
 				return (-1);
 			}
+			len = margin;
 			ft_putstr(nb);
+			ft_strdel(&nb);
 		}
 		else if (len == 1)
 			len = 0;
@@ -114,8 +116,18 @@ long long	empty_number(t_tag **format)
 		nb = format_unsigned(format, nb);
 		if (!nb)
 			return (-1);
-		len = print_final_string(format, nb, 0);
-		return (len);
+		if (ft_strequ(nb, "") && margin > 0)
+		{
+			if (!(nb = ft_strset(margin, ' ')))
+				return (-1);
+			len = margin;
+			ft_putstr(nb);
+			ft_strdel(&nb);
+		}
+		else if (ft_strequ(nb, ""))
+			len = 0;
+		else
+			len = print_final_string(format, nb, 0);
 	}
 	return (len);
 }

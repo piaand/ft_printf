@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 16:55:13 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 17:36:56 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,17 @@ int			print_unsigned(t_tag **format, va_list args)
 		print_unsigned = convert_number_unsigned(i, 8, format);
 	else
 		print_unsigned = convert_number_unsigned(i, 16, format);
-	if (!(print_unsigned = format_unsigned(format, print_unsigned)))
-		return (-1);
-	if (!(print_unsigned = create_margin(format, print_unsigned, 0)))
-		return (-1);
-	len = print_final_string(format, print_unsigned, 0);
+	if (!print_unsigned)
+		return(-1);
+	if (ft_strequ(print_unsigned, ""))
+		len = empty_number(format);
+	else
+	{
+		if (!(print_unsigned = format_unsigned(format, print_unsigned)))
+			return (-1);
+		if (!(print_unsigned = create_margin(format, print_unsigned, 0)))
+			return (-1);
+		len = print_final_string(format, print_unsigned, 0);
+	}
 	return (len);
 }
