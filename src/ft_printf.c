@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 12:50:11 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 10:52:56 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int		print_argument(const char **input, va_list args)
 	{
 		ft_putchar('%');
 		len_var = 1;
+		ft_strdel(&format_tag);
 	}
 	else
 		len_var = print_from_var_list(format_tag, args);

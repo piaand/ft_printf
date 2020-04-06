@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 16:11:51 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 13:43:49 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,36 @@ static int	find_specifier(t_tag **format)
 	return (index);
 }
 
+long long	print_null_char(char *str, unsigned int left_aligned, long long len)
+{
+	char *tmp;
+
+	len--;
+	tmp = NULL;
+	if (len <= 0)
+		write(1, "\0", 1);
+	else if (left_aligned)
+	{
+		write(1, "\0", 1);
+		if (!(tmp = ft_strsub(str, 1, len)))
+			return (-1);
+		ft_putstr(tmp);
+	}
+	else
+	{
+		if (!(tmp = ft_strsub(str, 0, len)))
+			return (-1);
+		ft_putstr(tmp);
+		write(1, "\0", 1);
+	}
+	ft_strdel(&tmp);
+	len++;
+	return (len);
+}
+
 size_t		print_final_string(t_tag **format, char *str, int char_null)
 {
-	size_t			len;
+	long long		len;
 	unsigned int	left;
 
 	left = 0;
@@ -37,18 +64,8 @@ size_t		print_final_string(t_tag **format, char *str, int char_null)
 			return (-1);
 	}
 	len = ft_strlen(str);
-	if (char_null && left)
-	{
-		write(1, "\0", 1);
-		ft_putstr(str);
-		len++;
-	}
-	else if (char_null)
-	{
-		ft_putstr(str);
-		write(1, "\0", 1);
-		len++;
-	}
+	if (char_null)
+		len = print_null_char(str, left, len);
 	else
 		ft_putstr(str);
 	ft_strdel(&str);
@@ -94,11 +111,17 @@ int			print_char(t_tag **format, va_list args)
 	len = 0;
 	c = va_arg(args, int);
 	if (c == 0)
+	{
 		char_null = 1;
+		if (!(str = ft_strset(1, 'c')))
+			return (-1);
+	}
 	else
+	{
 		char_null = 0;
-	if (!(str = ft_strset(1, c)))
-		return (-1);
+		if (!(str = ft_strset(1, c)))
+			return (-1);
+	}
 	len = print_final_string(format, str, char_null);
 	return (len);
 }

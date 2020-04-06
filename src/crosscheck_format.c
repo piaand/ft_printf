@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 16:27:30 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 11:13:31 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,15 @@ int char_null)
 		diff = width - len;
 		if (!(margin = ft_strset(diff, ' ')))
 		{
-			if (str && *str)
-				ft_strdel(&str);
+			ft_strdel(&str);
 			str = NULL;
 		}
 		if (left_align == 1)
 			new_str = ft_strjoin(str, margin);
 		else
 			new_str = ft_strjoin(margin, str);
-		if (margin)
-			ft_strdel(&margin);
-		if (str && *str)
-			ft_strdel(&str);
+		ft_strdel(&margin);
+		ft_strdel(&str);
 		return (new_str);
 	}
 	else
