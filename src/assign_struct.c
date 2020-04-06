@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 12:46:19 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 10:36:58 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,27 +89,34 @@ static void	init_tag(t_tag **t)
 int		assign_tag_info(t_tag **new, char *instructions)
 {
 	int		i;
+	int 	ok;
 	char	*found;
 
 	found = NULL;
 	i = 0;
 	init_tag(new);
+	ok = 0;
 	if (*new)
 	{
 		found = ft_strchr(FLAGS, *instructions);
 		if (found)
 			insert_flags(new, &instructions);
 		if (ft_isdigit(*instructions) && *instructions != '\0')
-			insert_width(new, &instructions);
-		if (*instructions == '.')
-			insert_precision(new, &instructions);
-		if (*instructions == 'h' || *instructions == 'l' || *instructions == 'L')
+			ok = insert_width(new, &instructions);
+		if (ok >= 0 && *instructions == '.')
+			ok = insert_precision(new, &instructions);
+		if (ok >= 0 && (*instructions == 'h' || *instructions == 'l' || *instructions == 'L'))
 			insert_length(new, &instructions);
 		found = ft_strchr(SPECIFIERS, *instructions);
 		if (!found)
 			ft_error("unvalid format tag.");
 		else
 			(*new)->specifier = *found;
+		if ((*new)->length == NULL || ok < 0)
+		{
+			free_format_tag(*new);
+			return (-1);
+		}
 		return (1);
 	}
 	else

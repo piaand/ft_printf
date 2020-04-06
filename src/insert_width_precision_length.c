@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 08:58:42 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/02 17:04:58 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 10:28:00 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	subtract_number(char **str)
 		(*str)++;
 	}
 	if (!(nb = ft_strnew(len)))
-		ft_error("memory allocation for string failed.");
+		return (-1);
 	while (len > 0)
 	{
 		(*str)--;
@@ -47,7 +47,7 @@ static char	*create_length(char first, char second)
 	char *str;
 
 	if (!(str = ft_strnew(2)))
-		ft_error("memory allocation for string failed.");
+		return (NULL);
 	str[0] = first;
 	str[1] = second;
 	return (str);
@@ -81,7 +81,7 @@ void		insert_length(t_tag **new, char **str)
 	(*str)++;
 }
 
-void		insert_precision(t_tag **new, char **str)
+int			insert_precision(t_tag **new, char **str)
 {
 	int precision;
 
@@ -90,14 +90,26 @@ void		insert_precision(t_tag **new, char **str)
 	(*new)->has_value[PRECISION_ON] = '1';
 	if (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 		precision = subtract_number(str);
-	(*new)->precision = precision;
+	if (precision == -1)
+		return (-1);
+	else
+	{
+		(*new)->precision = precision;
+		return (1);
+	}
 }
 
-void		insert_width(t_tag **new, char **str)
+int			insert_width(t_tag **new, char **str)
 {
 	int res;
 
 	(*new)->has_value[WIDTH_ON] = '1';
 	res = subtract_number(str);
-	(*new)->width = res;
+	if (res == -1)
+		return (-1);
+	else
+	{
+		(*new)->width = res;
+		return (1);
+	}
 }
