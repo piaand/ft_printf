@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/20 16:03:12 by pandersi          #+#    #+#             */
-/*   Updated: 2020/04/03 16:16:10 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 14:03:38 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_strdel(char **as)
 {
-	if (as && *as && *(*as))
+	if (as && *as)
 	{
 		free(*as);
 		*as = NULL;
