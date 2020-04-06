@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 10:36:29 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:56:16 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ int				print_integer(t_tag **format, va_list args);
 int				print_unsigned(t_tag **format, va_list args);
 int				print_float(t_tag **format, va_list args);
 void			crosscheck_format(t_tag **format);
+char 			*format_unsigned(t_tag **format, char *print_unsigned);
 size_t 			print_final_string(t_tag **format, char *str, int char_null);
 char			*create_padding(char *nb, unsigned int space, unsigned int precision);
+char 			*create_margin(t_tag **format, char *str, int char_null);
 char 			*add_padding(char *nb, unsigned int padding);
 char			*add_prefix(char *nb, unsigned int len, char *str);
 char 			*add_margin(char *str, unsigned int width, unsigned int left_align, int char_null);

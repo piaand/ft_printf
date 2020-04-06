@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 13:43:49 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:55:14 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ long long	print_null_char(char *str, unsigned int left_aligned, long long len)
 	return (len);
 }
 
+char *create_margin(t_tag **format, char *str, int char_null)
+{
+	unsigned int	left;
+	
+	left = 0;
+	if ((*format)->has_value[WIDTH_ON] == '1')
+	{
+		left = ((*format)->dash == 1) ? 1 : 0;
+		str = add_margin(str, (*format)->width, left, char_null);
+	}
+	return (str);
+}
+
 size_t		print_final_string(t_tag **format, char *str, int char_null)
 {
 	long long		len;
@@ -58,11 +71,7 @@ size_t		print_final_string(t_tag **format, char *str, int char_null)
 
 	left = 0;
 	if ((*format)->has_value[WIDTH_ON] == '1')
-	{
 		left = ((*format)->dash == 1) ? 1 : 0;
-		if (!(str = add_margin(str, (*format)->width, left, char_null)))
-			return (-1);
-	}
 	len = ft_strlen(str);
 	if (char_null)
 		len = print_null_char(str, left, len);
@@ -97,7 +106,9 @@ int			print_string(t_tag **format, va_list args)
 		ft_strdel(&output);
 		output = tmp;
 	}
-	len = print_final_string(format, output, 0);
+	if (!(tmp = create_margin(format, output, 0)))
+		return (-1);
+	len = print_final_string(format, tmp, 0);
 	return (len);
 }
 
@@ -122,6 +133,8 @@ int			print_char(t_tag **format, va_list args)
 		if (!(str = ft_strset(1, c)))
 			return (-1);
 	}
+	if (!(str = create_margin(format, str, char_null)))
+		return (-1);
 	len = print_final_string(format, str, char_null);
 	return (len);
 }

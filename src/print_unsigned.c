@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 17:17:59 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:55:13 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 	return (print_int);
 }
 
-char		*create_prefix(char specifier, unsigned int hash_on, char *nb)
+char		*create_prefix_unsigned(char specifier, unsigned int hash_on, char *nb)
 {
 	size_t len;
 
@@ -70,6 +70,23 @@ char		*create_prefix(char specifier, unsigned int hash_on, char *nb)
 	return (nb);
 }
 
+char *format_unsigned(t_tag **format, char *print_unsigned)
+{
+	char	c;
+
+	c = (*format)->specifier;
+	if (c != 'u')
+		print_unsigned = create_prefix_unsigned(c, (*format)->hash, print_unsigned);
+	if (print_unsigned && (*format)->has_value[PRECISION_ON] == '1' && c != 'p')
+		print_unsigned = create_padding(print_unsigned,
+		(*format)->precision, 1);
+	else if (print_unsigned && (*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
+		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
+	if (print_unsigned && (c == 'x' || c == 'p'))
+		ft_striter(print_unsigned, lower_letter);
+	return (print_unsigned);
+}
+
 int			print_unsigned(t_tag **format, va_list args)
 {
 	size_t	i;
@@ -85,16 +102,9 @@ int			print_unsigned(t_tag **format, va_list args)
 		print_unsigned = convert_number_unsigned(i, 8, format);
 	else
 		print_unsigned = convert_number_unsigned(i, 16, format);
-	if (c != 'u')
-		print_unsigned = create_prefix(c, (*format)->hash, print_unsigned);
-	if (print_unsigned && (*format)->has_value[PRECISION_ON] == '1' && c != 'p')
-		print_unsigned = create_padding(print_unsigned,
-		(*format)->precision, 1);
-	else if (print_unsigned && (*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
-		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
-	if (print_unsigned && (c == 'x' || c == 'p'))
-		ft_striter(print_unsigned, lower_letter);
-	if (!print_unsigned)
+	if (!(print_unsigned = format_unsigned(format, print_unsigned)))
+		return (-1);
+	if (!(print_unsigned = create_margin(format, print_unsigned, 0)))
 		return (-1);
 	len = print_final_string(format, print_unsigned, 0);
 	return (len);

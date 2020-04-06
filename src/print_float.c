@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 10:48:03 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 16:38:09 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:53:18 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int					print_float(t_tag **format, va_list args)
 		print_float = alter_by_flags(print_float, format);
 	if (!print_float)
 		return (-1);
+	if (!(print_float = create_margin(format, print_float, 0)))
+			return (-1);
 	len = print_final_string(format, print_float, 0);
 	return (len);
 }

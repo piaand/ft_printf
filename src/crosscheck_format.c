@@ -6,12 +6,23 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 11:13:31 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:06:44 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
+void	 delete_string(char *str, int override)
+{
+	size_t len;
+
+	if (str)
+	{
+		len = ft_strlen(str);
+		if (len > 0 || override == 1)
+			ft_strdel(&str);
+	}
+}
 char	*add_decimal(char *nb)
 {
 	char *postfix;

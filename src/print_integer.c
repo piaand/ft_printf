@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 09:17:17 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 16:36:05 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/06 16:58:19 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*control_length(t_tag **format, long long i)
 	return (print_int);
 }
 
-static char	*create_prefix(t_tag **format, char *nb)
+static char	*create_prefix_signed(t_tag **format, char *nb)
 {
 	char	sign;
 	char	*prefix;
@@ -60,6 +60,66 @@ static char	*create_prefix(t_tag **format, char *nb)
 	return (nb);
 }
 
+char *format_integer(char *print_int, t_tag **format)
+{
+	if ((*format)->space == 1 || (*format)->plus == 1)
+		print_int = create_prefix_signed(format, print_int);
+	if (print_int && ((*format)->has_value[PRECISION_ON] == '1'))
+		print_int = create_padding(print_int, (*format)->precision, 1);
+	else if ( print_int && (*format)->has_value[WIDTH_ON] == '1' &&
+	(*format)->zero == 1)
+		print_int = create_padding(print_int, (*format)->width, 0);
+	return (print_int);
+}
+
+long long	empty_number(t_tag **format)
+{
+	char *nb;
+	char *tmp;
+	char specifier;
+	long long len;
+	unsigned int margin;
+
+	specifier = (*format)->specifier;
+	if (specifier == 'd' || specifier == 'i')
+	{
+		if (!(tmp = ft_strset(1, '1')))
+			return (-1);
+		tmp = format_integer(tmp, format);
+		len = ft_strlen(tmp);
+		margin = (*format)->width;
+		if (len == 1 && margin > 0)
+		{
+			if (!(nb = ft_strset(margin, ' ')))
+			{
+				ft_strdel(&tmp);
+				return (-1);
+			}
+			ft_putstr(nb);
+		}
+		else if (len == 1)
+			len = 0;
+		else
+		{
+			len--;
+			nb = ft_strsub(tmp, 0, len);
+			nb = create_margin(format, nb, 0);
+			len = print_final_string(format, nb, 0);
+		}
+		ft_strdel(&tmp);
+	}
+	else
+	{
+		nb = "";
+		nb = format_unsigned(format, nb);
+		if (!nb)
+			return (-1);
+		len = print_final_string(format, nb, 0);
+		return (len);
+	}
+	return (len);
+}
+
 int			print_integer(t_tag **format, va_list args)
 {
 	long long	i;
@@ -70,15 +130,18 @@ int			print_integer(t_tag **format, va_list args)
 	i = va_arg(args, long long int);
 	if (!(print_int = control_length(format, i)))
 		return (-1);
-	if ((*format)->space == 1 || (*format)->plus == 1)
-		print_int = create_prefix(format, print_int);
-	if (print_int && ((*format)->has_value[PRECISION_ON] == '1'))
-		print_int = create_padding(print_int, (*format)->precision, 1);
-	else if ( print_int && (*format)->has_value[WIDTH_ON] == '1' &&
-	(*format)->zero == 1)
-		print_int = create_padding(print_int, (*format)->width, 0);
-	if (!print_int)
-		return (-1);
-	len = print_final_string(format, print_int, 0);
+	if (ft_strequ("", print_int))
+	{
+		print_int = NULL;
+		len = empty_number(format);
+	}
+	else
+	{
+		if (!(print_int = format_integer(print_int, format)))
+			return (-1);
+		if (!(print_int = create_margin(format, print_int, 0)))
+			return (-1);
+		len = print_final_string(format, print_int, 0);
+	}
 	return (len);
 }
