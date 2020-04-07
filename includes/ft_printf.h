@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 17:35:07 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/07 15:52:03 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # define WIDTH_ON 1
 # define PRECISION_ON 2
 # define LENGTH_ON 3
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define EOC "\x1b[0m"
 
 
 typedef struct			s_tag
