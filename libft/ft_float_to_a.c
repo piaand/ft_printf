@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 09:59:12 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 11:46:48 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/07 10:35:32 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,28 @@
 
 #include "includes/libft.h"
 
-static char *write_middle_part(unsigned int zeros)
+static long double	substract_nb(long double nb)
 {
-	char *middle;
-	size_t len;
+	long long	i;
 
-	len = 1 + zeros;
-	if (!(middle = ft_strset(len, '0')))
-		return (NULL);
-	middle[0] = '.';
-	return (middle);
+	i = nb;
+	if (nb < 0)
+	{
+		nb *= -1;
+		i *= -1;
+	}
+	nb -= i;
+	return (nb);
 }
 
-static unsigned int write_decimal_part(char **decimal, long double nb, unsigned int precision)
+static unsigned int	write_decimal_part(char **decimal, long double nb,
+unsigned int precision)
 {
-	char *decimal_nb;
-	unsigned long long int i;
-	unsigned int zero_count_on;
-	unsigned int count;
-	unsigned long long int d;
+	char					*decimal_nb;
+	unsigned long long int	i;
+	unsigned int			zero_count_on;
+	unsigned int			count;
+	unsigned long long int	d;
 
 	zero_count_on = 1;
 	count = 0;
@@ -50,69 +53,59 @@ static unsigned int write_decimal_part(char **decimal, long double nb, unsigned 
 	}
 	i = nb;
 	if (!(decimal_nb = ft_itoa_base_unsigned(i, 10)))
-		*decimal = NULL;
+		ft_strdel(&(*decimal));
 	else
 		ft_strcpy(*decimal, decimal_nb);
 	ft_strdel(&decimal_nb);
-	return(count);
+	return (count);
 }
 
-static long double	write_integer_part(char **integer, long double nb)
+static char			*write_integer_part(long double nb)
 {
 	char		*integer_part;
 	long long	i;
-	char		*tmp;
-	
-	i = nb;
-	tmp = *integer;
-	if (!(integer_part = ft_itoa_base(i, 10)))
-		tmp = NULL;
-	else
-		ft_strcpy(tmp, integer_part);
-	ft_strdel(&integer_part);
+
 	if (nb < 0 && nb > -1)
 	{
 		if (!(integer_part = ft_strset(2, '0')))
-			tmp = NULL;
-		else
-		{
-			integer_part[0] = '-';
-			ft_strdel(&tmp);
-			if (!(tmp = strdup(integer_part)))
-				tmp = NULL;
-		}
-	}
-	if (nb < 0)
-	{
-		nb *= -1;
-		i *= -1;
-	}
-	nb -= i;
-	return (nb);
-}
-
-static char *join_parts(char *integer, char *middle, char *decimal)
-{
-	char *full_float;
-
-	if ((!integer) || (!middle) || (!decimal))
-		return (NULL);
-	if (!(integer = ft_strjoin(integer, middle)))
-		return (NULL);
-	ft_strdel(&middle);
-	if (decimal[0] != '0')
-	{
-		if (!(full_float = ft_strjoin(integer, decimal)))
 			return (NULL);
-		ft_strdel(&integer);
+		else
+			integer_part[0] = '-';
 	}
 	else
-		full_float = integer;
+	{
+		i = nb;
+		if (!(integer_part = ft_itoa_base(i, 10)))
+			return (NULL);
+	}
+	return (integer_part);
+}
+
+static char			*join_parts(char *integer, char *middle, char *decimal)
+{
+	char	*full_float;
+	char	*tmp;
+
+	tmp = NULL;
+	full_float = NULL;
+	if (integer && middle)
+		tmp = ft_strjoin(integer, middle);
+	ft_strdel(&middle);
+	ft_strdel(&integer);
+	if (decimal && decimal[0] != '0' && tmp)
+	{
+		full_float = ft_strjoin(tmp, decimal);
+		ft_strdel(&tmp);
+	}
+	else if (decimal && tmp)
+		full_float = tmp;
+	else
+		ft_strdel(&tmp);
 	ft_strdel(&decimal);
 	return (full_float);
 }
 
-char *ft_float_to_a(long double nb, unsigned int precision)
+char				*ft_float_to_a(long double nb, unsigned int precision)
 {
 	char			*integer_nb;
 	char			*decimal_nb;
@@ -120,16 +113,19 @@ char *ft_float_to_a(long double nb, unsigned int precision)
 	char			*full_float;
 	unsigned int	zero_amount;
 
-	if (!(integer_nb = ft_strnew(ft_count_nbr_length((long long)nb))))
+	if (!(integer_nb = write_integer_part(nb)))
 		return (NULL);
-	nb = write_integer_part(&integer_nb, nb);
+	nb = substract_nb(nb);
 	if (precision != 0)
 	{
 		if (!(decimal_nb = ft_strnew(precision)))
+		{
+			ft_strdel(&integer_nb);
 			return (NULL);
+		}
 		zero_amount = write_decimal_part(&decimal_nb, nb, precision);
-		if (!(middle_part = write_middle_part(zero_amount)))
-			return (NULL);
+		if ((middle_part = ft_strset((zero_amount + 1), '0')))
+			middle_part[0] = '.';
 		full_float = join_parts(integer_nb, middle_part, decimal_nb);
 		return (full_float);
 	}
