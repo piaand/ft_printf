@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   crosscheck_format.c                                :+:      :+:    :+:   */
+/*   check_specifier_length.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 09:41:24 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 16:06:44 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:16:32 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	 delete_string(char *str, int override)
+static char	*join_nb_prefix(char *nb, char *prefix)
 {
-	size_t len;
-
-	if (str)
-	{
-		len = ft_strlen(str);
-		if (len > 0 || override == 1)
-			ft_strdel(&str);
-	}
-}
-char	*add_decimal(char *nb)
-{
-	char *postfix;
 	char *added;
 
-	if (!(postfix = ft_strset(1, '.')))
-		return (NULL);
-	added = ft_strjoin(nb, postfix);
-	ft_strdel(&postfix);
-	ft_strdel(&nb);
+	if (ft_strlen(nb) == 0)
+		added = ft_strdup(prefix);
+	else
+		added = ft_strjoin(prefix, nb);
+	ft_strdel(&prefix);
+	if (nb && *nb)
+		ft_strdel(&nb);
 	return (added);
 }
 
-char	*add_prefix(char *nb, unsigned int len, char *str)
+char		*add_prefix(char *nb, unsigned int len, char *str)
 {
 	char *prefix;
 	char *added;
@@ -55,19 +45,13 @@ char	*add_prefix(char *nb, unsigned int len, char *str)
 				ft_strdel(&nb);
 			return (NULL);
 		}
-		if (ft_strlen(nb) == 0)
-			added = ft_strdup(prefix);
-		else
-			added = ft_strjoin(prefix, nb);
-		ft_strdel(&prefix);
-		if (nb && *nb)
-			ft_strdel(&nb);
+		added = join_nb_prefix(nb, prefix);
 		return (added);
 	}
 }
 
-char	*add_margin(char *str, unsigned int width, unsigned int left_align,
-int char_null)
+char		*add_margin(char *str, unsigned int width,
+unsigned int left_align, int char_null)
 {
 	size_t			len;
 	unsigned int	diff;
@@ -96,34 +80,42 @@ int char_null)
 		return (str);
 }
 
-int		check_length(char specifier, char *length)
+char		*add_decimal(char *nb)
 {
-	if (specifier == 'c' || specifier == 's' || specifier == 'p')
-		return (0);
-	else if (specifier == 'f')
-	{
-		if (ft_strequ(length, "0L") || ft_strequ(length, "0l"))
-			return (1);
-		else
-			return (0);
-	}
-	else
-	{
-		if (ft_strequ(length, "0L"))
-			return (0);
-		else
-			return (1);
-	}
+	char *postfix;
+	char *added;
+
+	if (!(postfix = ft_strset(1, '.')))
+		return (NULL);
+	added = ft_strjoin(nb, postfix);
+	ft_strdel(&postfix);
+	ft_strdel(&nb);
+	return (added);
 }
 
-void	crosscheck_format(t_tag **format)
+void		check_specifier_length(t_tag **format)
 {
-	int ok;
+	int		ok;
+	char	specifier;
+	char	*length;
 
 	ok = 0;
+	specifier = (*format)->specifier;
+	length = (*format)->length;
 	if ((*format)->has_value[LENGTH_ON] == '1')
 	{
-		ok = check_length((*format)->specifier, (*format)->length);
+		if (specifier == 'c' || specifier == 's' || specifier == 'p')
+			ok = 0;
+		else if (specifier == 'f')
+		{
+			if (ft_strequ(length, "0L") || ft_strequ(length, "0l"))
+				ok = 1;
+		}
+		else
+		{
+			if (!(ft_strequ(length, "0L")))
+				ok = 1;
+		}
 		if (!ok)
 			ft_error("found unvalid specifier - length combination");
 	}
