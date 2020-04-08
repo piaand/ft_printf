@@ -6,7 +6,7 @@
 #    By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/16 11:06:14 by piaandersin       #+#    #+#              #
-#    Updated: 2020/04/02 09:23:09 by piaandersin      ###   ########.fr        #
+#    Updated: 2020/04/08 13:01:00 by piaandersin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = libftprintf.a
 
 SRC = ./src/ft_printf.c ./src/assign_struct.c ./src/print_next_var.c \
 ./src/print_unsigned.c ./src/crosscheck_format.c ./src/print_float.c \
-./src/add_padding.c ./src/insert_width_precision_length.c \
-./src/print_integer.c 
+./src/add_padding.c ./src/insert_width_precision_length.c ./src/print_cs.c \
+./src/print_integer.c ./src/color_argument.c ./src/empty_number.c 
 
 OBJ = $(subst .c,.o,$(subst src/,,$(SRC)))
 
