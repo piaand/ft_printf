@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:30:01 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/07 15:52:03 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 10:13:00 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char			*add_prefix(char *nb, unsigned int len, char *str);
 char 			*add_margin(char *str, unsigned int width, unsigned int left_align, int char_null);
 char			*add_decimal(char *nb);
 unsigned int	check_prefix(char *prefix);
+int				color_argument(const char **input);
 
 
 # endif
