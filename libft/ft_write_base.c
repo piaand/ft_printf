@@ -6,26 +6,27 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 11:41:39 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 16:15:25 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:32:42 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Returns a string representing a number given in variable i converted to base. 
-*/
-
 #include "includes/libft.h"
 
-static char get_char(unsigned int mod)
+/*
+** Returns string representing a number given in variable i converted to base.
+*/
+
+static char	get_char(unsigned int mod)
 {
-	char base_char[] = "0123456789ABCDEF";
+	char *base_char[1];
 	char c;
 
-	c = base_char[mod];
+	base_char[0] = "0123456789ABCDEF";
+	c = base_char[0][mod];
 	return (c);
 }
 
-char	*ft_write_base(size_t i, size_t len, int base, char *ascii)
+char		*ft_write_base(size_t i, size_t len, int base, char *ascii)
 {
 	unsigned int	mod;
 	char			c;
@@ -37,5 +38,5 @@ char	*ft_write_base(size_t i, size_t len, int base, char *ascii)
 		ascii[--len] = c;
 		i /= base;
 	}
-	return(ascii);
+	return (ascii);
 }

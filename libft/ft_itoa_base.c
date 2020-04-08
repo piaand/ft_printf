@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/20 09:47:11 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/26 15:14:16 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:33:26 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 ** minus sign (-). With any other base, value is always considered unsigned.
 */
 
-static size_t itoa_convert(long long int value, int base, int *sign)
+static size_t	itoa_convert(long long int value, int base, int *sign)
 {
 	unsigned int	llmin;
 	size_t			u;
-	
+
 	llmin = 0;
 	if (value == LLONG_MIN)
 	{
 		llmin = 1;
-		value +=llmin;
+		value += llmin;
 	}
 	if (value < 0 && base == 10)
 	{
@@ -41,7 +41,7 @@ static size_t itoa_convert(long long int value, int base, int *sign)
 	return (u);
 }
 
-char	*ft_itoa_base(long long int value, int base)
+char			*ft_itoa_base(long long int value, int base)
 {
 	char	*ascii;
 	int		sign;

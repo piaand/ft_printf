@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/23 11:31:28 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/03/23 16:16:22 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:27:23 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 ** If base is 10 and value is negative, the resulting string is preceded with a
 ** minus sign (-). With any other base, value is always considered unsigned.
 */
-
 
 char	*ft_itoa_base_unsigned(size_t value, int base)
 {
