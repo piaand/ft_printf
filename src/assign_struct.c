@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/18 08:51:13 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/08 16:20:12 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:44:49 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void		init_tag(t_tag **t)
 ** -1 with error. If format tag is not undefined exits the program.
 */
 
-int				read_info(t_tag **new, char *instructions)
+static int		read_info(t_tag **new, char *instructions)
 {
 	char	*found;
 	int		ok;

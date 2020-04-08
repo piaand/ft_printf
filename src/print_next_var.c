@@ -6,13 +6,13 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/19 13:49:20 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/08 17:18:27 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:50:19 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void		ft_error(char *message)
+void				ft_error(char *message)
 {
 	ft_putstr("Error: ");
 	ft_putendl(message);
@@ -20,7 +20,7 @@ void		ft_error(char *message)
 	exit(1);
 }
 
-static int	find_specifier(t_tag **format)
+static int			find_specifier(t_tag **format)
 {
 	char	s;
 	int		index;
@@ -32,7 +32,8 @@ static int	find_specifier(t_tag **format)
 	return (index);
 }
 
-long long	print_null_char(char *str, unsigned int left_aligned, long long len)
+static long long	print_null_char(char *str, unsigned int left_aligned,
+long long len)
 {
 	char *tmp;
 
@@ -59,7 +60,7 @@ long long	print_null_char(char *str, unsigned int left_aligned, long long len)
 	return (len);
 }
 
-size_t		print_final_string(t_tag **format, char *str, int char_null)
+size_t				print_final_string(t_tag **format, char *str, int char_null)
 {
 	long long		len;
 	unsigned int	left;
@@ -76,7 +77,7 @@ size_t		print_final_string(t_tag **format, char *str, int char_null)
 	return (len);
 }
 
-int			print_next_var(t_tag **format, va_list args)
+int					print_next_var(t_tag **format, va_list args)
 {
 	int		len;
 	int		index;

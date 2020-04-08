@@ -6,13 +6,13 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/08 17:03:53 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 17:47:38 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 
-void	free_format_tag(t_tag *format)
+void		free_format_tag(t_tag *format)
 {
 	if (format)
 	{
@@ -22,7 +22,7 @@ void	free_format_tag(t_tag *format)
 	}
 }
 
-char	*find_tag(const char **str)
+static char	*find_tag(const char **str)
 {
 	char			*format_tag;
 	char			*temp;
@@ -50,7 +50,7 @@ char	*find_tag(const char **str)
 	return (format_tag);
 }
 
-int		print_from_var_list(char *format_tag, va_list args)
+static int	print_from_var_list(char *format_tag, va_list args)
 {
 	t_tag	*new;
 	int		len;
@@ -77,7 +77,7 @@ int		print_from_var_list(char *format_tag, va_list args)
 ** Returns the amount of printed argument characters
 */
 
-int		print_argument(char c, const char **input, va_list args)
+static int	print_argument(char c, const char **input, va_list args)
 {
 	char	*format_tag;
 	int		len_var;
@@ -109,7 +109,7 @@ int		print_argument(char c, const char **input, va_list args)
 ** Returns the amount of printed characters
 */
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	size_t	len;
 	size_t	len_var;
