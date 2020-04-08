@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 10:21:31 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/06 17:36:56 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 15:17:28 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 ** function prototype og ft_tolower (it returns the new lower case charater).
 */
 
-static void	lower_letter(char *str)
+static void		lower_letter(char *str)
 {
 	*(str) = ft_tolower(*(str));
 }
 
-static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
+static char		*convert_number_unsigned(size_t nb, int base, t_tag **format)
 {
 	char *print_int;
 	char c;
@@ -50,7 +50,8 @@ static char	*convert_number_unsigned(size_t nb, int base, t_tag **format)
 	return (print_int);
 }
 
-char		*create_prefix_unsigned(char specifier, unsigned int hash_on, char *nb)
+static char		*create_prefix_unsigned(char specifier, unsigned int hash_on,
+char *nb)
 {
 	size_t len;
 
@@ -70,40 +71,40 @@ char		*create_prefix_unsigned(char specifier, unsigned int hash_on, char *nb)
 	return (nb);
 }
 
-char *format_unsigned(t_tag **format, char *print_unsigned)
+char			*format_unsigned(t_tag **format, char *print_unsigned)
 {
 	char	c;
 
 	c = (*format)->specifier;
 	if (c != 'u')
-		print_unsigned = create_prefix_unsigned(c, (*format)->hash, print_unsigned);
+		print_unsigned = create_prefix_unsigned(c, (*format)->hash,
+		print_unsigned);
 	if (print_unsigned && (*format)->has_value[PRECISION_ON] == '1' && c != 'p')
 		print_unsigned = create_padding(print_unsigned,
 		(*format)->precision, 1);
-	else if (print_unsigned && (*format)->has_value[WIDTH_ON] == '1' && (*format)->zero == 1)
+	else if (print_unsigned && (*format)->has_value[WIDTH_ON] == '1'
+	&& (*format)->zero == 1)
 		print_unsigned = create_padding(print_unsigned, (*format)->width, 0);
 	if (print_unsigned && (c == 'x' || c == 'p'))
 		ft_striter(print_unsigned, lower_letter);
 	return (print_unsigned);
 }
 
-int			print_unsigned(t_tag **format, va_list args)
+int				print_unsigned(t_tag **format, va_list args)
 {
 	size_t	i;
 	size_t	len;
 	char	*print_unsigned;
-	char	c;
 
-	c = (*format)->specifier;
 	i = va_arg(args, unsigned long);
-	if (c == 'u')
+	if ((*format)->specifier == 'u')
 		print_unsigned = convert_number_unsigned(i, 10, format);
-	else if (c == 'o')
+	else if ((*format)->specifier == 'o')
 		print_unsigned = convert_number_unsigned(i, 8, format);
 	else
 		print_unsigned = convert_number_unsigned(i, 16, format);
 	if (!print_unsigned)
-		return(-1);
+		return (-1);
 	if (ft_strequ(print_unsigned, ""))
 		len = empty_number(format);
 	else

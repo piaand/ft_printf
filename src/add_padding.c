@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/27 13:08:33 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/03 16:11:09 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 15:49:41 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ unsigned int padding_size)
 	char *new_nb;
 
 	if (!(padding = ft_strset(padding_size, '0')))
-	{
-		ft_strdel(&sign);
-		ft_strdel(&nb);
-		value = NULL;
-	}
+		return (NULL);
 	else
 		value = subtract_value(nb, ft_strlen(nb), prefix);
 	if (prefix > 0)
@@ -47,10 +43,8 @@ unsigned int padding_size)
 	}
 	else
 		new_nb = ft_strjoin(padding, value);
-	ft_strdel(&sign);
 	ft_strdel(&padding);
 	ft_strdel(&value);
-	ft_strdel(&nb);
 	return (new_nb);
 }
 
@@ -91,13 +85,12 @@ char			*add_padding(char *nb, unsigned int padding)
 		if (len_pre > 0)
 		{
 			if (!(prefix = ft_strsub(nb, 0, len_pre)))
-			{
-				ft_strdel(&prefix);
 				return (NULL);
-			}
 		}
 	}
 	new_nb = create_new_nb(nb, prefix, len_pre, padding);
+	ft_strdel(&nb);
+	ft_strdel(&prefix);
 	return (new_nb);
 }
 

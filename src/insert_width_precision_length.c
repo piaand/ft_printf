@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/31 08:58:42 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/07 16:11:39 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 15:40:49 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static int	subtract_number(char **str)
 	size_t	len;
 	int		res;
 	char	*nb;
+	char	*tmp;
 
 	len = 0;
+	tmp = *str;
 	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 	{
 		len++;
@@ -26,11 +28,8 @@ static int	subtract_number(char **str)
 	}
 	if (!(nb = ft_strnew(len)))
 		return (-1);
-	while (len > 0)
-	{
-		(*str)--;
-		len--;
-	}
+	len = 0;
+	*str = tmp;
 	while (ft_isdigit(*(*str)) && (*(*str)) != '\0')
 	{
 		nb[len] = *(*str);

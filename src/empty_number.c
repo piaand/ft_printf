@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 12:12:29 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/08 12:58:05 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 16:17:57 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static long long	print_empty_unsigned(t_tag **format, unsigned int margin)
 	return (len);
 }
 
-long long	empty_number(t_tag **format)
+long long			empty_number(t_tag **format)
 {
 	char			specifier;
 	long long		len;
