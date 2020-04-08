@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 11:59:19 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/07 17:16:53 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 11:11:19 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,115 +77,32 @@ int		print_from_var_list(char *format_tag, va_list args)
 ** Returns the amount of printed argument characters
 */
 
-int		print_argument(const char **input, va_list args)
+int		print_argument(char c, const char **input, va_list args)
 {
 	char	*format_tag;
 	int		len_var;
 	size_t	i;
 
-	(*input)++;
-	if (!(format_tag = find_tag(input)))
-		return (-1);
-	i = 0;
-	while (i < ft_strlen(format_tag))
+	if (c == '{')
+		len_var = color_argument(input);
+	else
 	{
 		(*input)++;
-		i++;
-	}
-	if (format_tag[0] == '%')
-	{
-		ft_putchar('%');
-		len_var = 1;
-		ft_strdel(&format_tag);
-	}
-	else
-		len_var = print_from_var_list(format_tag, args);
-	return (len_var);
-}
-
-char *find_color_tag(const char **input)
-{
-	size_t len;
-	char *tag;
-	char *tmp;
-
-	if (!(tmp = ft_strnew(ft_strlen(*input))))
-		return (NULL);
-	tmp = ft_strcpy(tmp, *input);
-	len = 0;
-	while (tmp[len] != '\0' && tmp[len] != '%' && tmp[len] != '}')
-		len++;
-	if (tmp[len] == '}')
-	{
-		len++;
-		tag = ft_strsub(tmp, 0, len);
-	}
-	else
-		tag = ft_strdup("(not found)");
-	ft_strdel(&tmp);
-	return (tag);	
-}
-
-int		match_color_tag(char *tag)
-{
-	char	*colors[7];
-	int		i;
-
-	colors[0] = "{red}";
-	colors[1] = "{green}";
-	colors[2] = "{yellow}";
-	colors[3] = "{blue}";
-	colors[4] = "{magenta}";
-	colors[5] = "{cyan}";
-	colors[6] = "{eoc}";
-	i = 0;
-	while (i >= 0 && i < 7)
-	{
-		if (ft_strequ(tag, colors[i]))
-			break;
-		else
-			i++;
-	}
-	if (i == 7)	
-		return (-1);
-	else
-		return (i);
-}
-
-int 	color_argument(const char **input)
-{
-	char	*tag;
-	int		verify;
-	size_t	len;
-	char	*colors[7];
-
-	colors[0] = RED;
-	colors[1] = GREEN;
-	colors[2] = YELLOW;
-	colors[3] = BLUE;
-	colors[4] = MAGENTA;
-	colors[5] = CYAN;
-	colors[6] = EOC;
-
-	if (!(tag = find_color_tag(input)))
-		return (-1);
-	if (!(ft_strequ(tag, "(not found)")))
-	{
-		verify = match_color_tag(tag);
-		if (verify >= 0)
+		if (!(format_tag = find_tag(input)))
+			return (-1);
+		i = 0;
+		while (i++ < ft_strlen(format_tag))
+			(*input)++;
+		if (format_tag[0] == '%')
 		{
-			len = ft_strlen(tag);
-			while (len-- > 0)
-				(*input)++;
-			ft_putstr(colors[verify]);
-			ft_strdel(&tag);
-			return (0);
+			ft_putchar('%');
+			len_var = 1;
+			ft_strdel(&format_tag);
 		}
+		else
+			len_var = print_from_var_list(format_tag, args);
 	}
-	ft_strdel(&tag);
-	ft_putchar('{');
-	(*input)++;
-	return (1);
+	return (len_var);
 }
 
 /*
@@ -207,12 +124,10 @@ int		ft_printf(const char *format, ...)
 		{
 			ft_putchar(*format);
 			len++;
-			format++; //move this maybe inside putchar?
+			format++;
 		}
-		if (*format == '%')
-			len_var = print_argument(&format, args);
-		else if (*format == '{')
-			len_var = color_argument(&format);
+		if (*format == '%' || *format == '{')
+			len_var = print_argument(*format, &format, args);
 		if (len_var < 0)
 			return (-1);
 		else

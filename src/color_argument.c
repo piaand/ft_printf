@@ -6,7 +6,7 @@
 /*   By: piaandersin <piaandersin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 10:11:54 by piaandersin       #+#    #+#             */
-/*   Updated: 2020/04/08 10:54:25 by piaandersin      ###   ########.fr       */
+/*   Updated: 2020/04/08 11:08:16 by piaandersin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** the amount of the color tag characters and does not print it out.
 */
 
-static void	print_color(int color, char **input, char *tag)
+static void	print_color(int color, const char **input, char *tag)
 {
 	size_t	len;
 	char	*colors[7];
@@ -105,7 +105,6 @@ int			color_argument(const char **input)
 {
 	char	*tag;
 	int		verify;
-	int		print;
 
 	if (!(tag = find_color_tag(input)))
 		return (-1);
