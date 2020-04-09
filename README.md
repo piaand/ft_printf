@@ -6,7 +6,7 @@ This is a project for Hive Helsinki to implement my own version of the printf fu
 - Implementing the variable argument lists
 - Exercising the separation of concerns and coding along the DRY principle
 
-# Conversions and features
+## Conversions and features
 If you do not know the original printf function see the `man printf` first.
 
 My printf does the following conversions
@@ -31,15 +31,15 @@ Colors available
 - `{cyan}`
 - `{eoc}` i.e. end of color
 
-# Compiling and using ft_printf
+## Compiling and using ft_printf
 - Clone this repository
 - run `make && make clean` inside the repository
 - in the repository you will find libftprintf.a library that you may use with your .c files to apply `int ft_printf(const char *format, ...)`
 
-# Notes
+## Notes
 Since this is a school project we are bound to some syntax rules, such as:
 - Functions max. 25 lines long
 - Lines max. 81 characters long
 - Only 5 functions allowed per .c file
 
-Also it was forbidden to do the [buffer management](https://stackoverflow.com/questions/45385807/what-is-it-with-printf-sending-output-to-buffer/45386520#45386520) inside the ft_printf function which makes my printf to perform significantly slower than the actual one: my ft_printf writes the character to standard output one at the time.
+Also it was forbidden to do the [buffer management](https://stackoverflow.com/questions/45385807/what-is-it-with-printf-sending-output-to-buffer/45386520#45386520) inside the ft_printf function which makes my printf perform significantly slower than the actual one: my ft_printf writes the character to standard output one at the time.
