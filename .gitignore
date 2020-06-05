@@ -1,7 +1,6 @@
 *.DS_Store
 *.o
 *.h.gch
-testmains/
 out
 a.out
 *.a
